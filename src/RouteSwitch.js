@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 
 const RouteSwitch = () => {
 
-    const [userData, setUserData] = useState()
+    const [userData, setUserData] = useUserData()
     const [tweetData, setTweetData]= useState({
             "created_at": "",
             "id": null,
@@ -19,8 +19,6 @@ const RouteSwitch = () => {
             "entities": {}
            
     })
-
-    useUserData()
 
     console.log(userData)
 

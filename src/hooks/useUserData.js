@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getFirestore, getDocs, collection, doc, setDoc, addDoc, deleteDoc, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 
-const useUserData = (uid) => {
+const useUserData = () => {
 
     // "id": null,
 	// "id_str": "",
