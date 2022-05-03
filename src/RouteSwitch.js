@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import useUserData from "./hooks/useUserData";
+import useFirebase from "./hooks/useFirebase";
 import App from "./App";
 import Home from "./components/Home";
 import Messages from "./components/Messages";
@@ -9,18 +9,24 @@ import { useState, useEffect } from "react";
 
 const RouteSwitch = () => {
 
-    const [userData, setUserData] = useUserData()
-    const [tweetData, setTweetData]= useState({
-            "created_at": "",
-            "id": null,
-            "id_str": "",
-            "text": "",
-            "user": {},  
-            "entities": {}
-           
-    })
+  // "id": null,
+	// "id_str": "",
+	// "name": "",
+	// "screen_name": "",
+	// "location": "",
+	// "description": "",
+	// "url": "",
+  // "followers_count": null,
+	// "friends_count": null,
+	// "listed_count": null,
+	// "created_at": "",
+  // "profile_image": ""
+
+    const [userData] = useFirebase('users')
+    const [scripts] = useFirebase('allScripts')
 
     console.log(userData)
+    console.log(scripts)
 
   return (
     <BrowserRouter>
