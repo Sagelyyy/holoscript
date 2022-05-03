@@ -1,9 +1,12 @@
 import './Home.css'
+import Post from './Post'
 
 const Home = () => {
-    return(
+    return (
         <div className="home--container">
-            <h1>Hello Home</h1>
+            <h1 style={{color: 'white'}}>Home</h1>
+            <Post />
+
         </div>
 
     )

@@ -1,11 +1,29 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import useUserData from "./hooks/useUserData";
 import App from "./App";
 import Home from "./components/Home";
 import Messages from "./components/Messages";
 import Profile from "./components/Profile";
 import Notifications from "./components/Notifications";
+import { useState, useEffect } from "react";
 
 const RouteSwitch = () => {
+
+    const [userData, setUserData] = useState()
+    const [tweetData, setTweetData]= useState({
+            "created_at": "",
+            "id": null,
+            "id_str": "",
+            "text": "",
+            "user": {},  
+            "entities": {}
+           
+    })
+
+    useUserData()
+
+    console.log(userData)
+
   return (
     <BrowserRouter>
       <Routes>

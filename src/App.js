@@ -12,9 +12,10 @@ function App() {
           <Link className="nav--link" to="/notifications">notifications</Link>
         </div>
       </nav>
+      <div className='content--container'>
       <Outlet />
+      </div>
       <div className='app--sidebar'>
-        
       </div>
     </div>
   );
