@@ -7,7 +7,7 @@ import {
 } from "firebase/auth"
 import { auth } from "../firebase";
 
-const userAuthContext = createContext();
+const UserAuthContext = createContext();
 
 
 export function UserAuthContextProvider({ children }) {
@@ -34,5 +34,5 @@ export function UserAuthContextProvider({ children }) {
 }
 
 export function useUserAuth() {
-    return useContext(userAuthContext)
+    return useContext(UserAuthContext)
 }
