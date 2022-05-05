@@ -1,20 +1,21 @@
 import './SignUpModal.css'
 import { useContext, useEffect, useState } from "react"
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase";
-import GlobalUser from "../contexts/GlobalUser";
 import { setDoc, doc } from 'firebase/firestore';
 import { nanoid } from 'nanoid';
+import { useUserAuth } from '../contexts/UserAuthContext';
 
 const SignUpModal = () => {
 
-    const [user, setUser] = useContext(GlobalUser)
+    const [user, setUser] = useState()
     const [localUser, setLocalUser] = useState()
-    const [password, setPassword ] = useState()
+    const [password, setPassword] = useState()
+    const [error, setError] = useState()
+    const { signUp } = useUserAuth();
 
     useEffect(() => {
         console.log(user)
-    },[user])
+    }, [user])
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -27,13 +28,13 @@ const SignUpModal = () => {
     }
 
     const handlePassword = (e) => {
-        const {name, value} = e.target
+        const { name, value } = e.target
         setPassword(old => {
-            return({
+            return ({
                 ...old,
                 [name]: value
             })
-      
+
         })
     }
 
@@ -41,13 +42,14 @@ const SignUpModal = () => {
         await setDoc(doc(db, "users", userData.uid), userObj)
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+        setError("")
         const date = new Date()
         const time = date.getTime().toString()
         const newId = nanoid()
         setUser(old => {
-            return({
+            return ({
                 ...localUser,
                 created_at: time,
                 id: newId,
@@ -57,21 +59,18 @@ const SignUpModal = () => {
 
             })
         })
-
-        // createNewuser()
+        try {
+            await signUp(user.email, password.password)
+        } catch (err) {
+            setError(err.message)
+        }
     }
 
-    const createNewuser = () => {
-        createUserWithEmailAndPassword(auth, localUser.email, password.password)
-        .then((userCredential) => {
-            const newUser = userCredential.user;
-            writeUserData(newUser)
-        })
-    }
 
     return (
         <div className="modal--container">
             <h1>Join today and start chatting.</h1>
+            {error && <h5>{error}</h5>}
             <form onSubmit={handleSubmit}>
                 <input onChange={handleChange} name="username" placeholder="username"></input>
                 <input onChange={handleChange} name="email" placeholder="email@address.com"></input>

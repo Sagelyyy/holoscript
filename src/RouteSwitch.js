@@ -6,7 +6,7 @@ import Messages from "./components/Messages";
 import Profile from "./components/Profile";
 import Notifications from "./components/Notifications";
 import { useState, useEffect } from "react";
-import GlobalUser from "./contexts/GlobalUser";
+import { UserAuthContextProvider } from "./contexts/UserAuthContext";
 
 
 const RouteSwitch = () => {
@@ -16,8 +16,9 @@ const RouteSwitch = () => {
     const [scripts] = useFirebase('allScripts')
 
     return (
-        <GlobalUser.Provider value={[user, setUser]}>
-            <BrowserRouter>
+
+        <BrowserRouter>
+            <UserAuthContextProvider>
                 <Routes>
                     <Route path="/" element={<App />}>
                         <Route path="/" element={<Home />} />
@@ -26,8 +27,9 @@ const RouteSwitch = () => {
                         <Route path='notifications' element={<Notifications />} />
                     </Route>
                 </Routes>
-            </BrowserRouter>
-        </GlobalUser.Provider>
+            </UserAuthContextProvider>
+        </BrowserRouter>
+
     );
 };
 
