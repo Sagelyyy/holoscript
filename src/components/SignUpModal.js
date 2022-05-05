@@ -12,6 +12,10 @@ const SignUpModal = () => {
     const [localUser, setLocalUser] = useState()
     const [password, setPassword ] = useState()
 
+    useEffect(() => {
+        console.log(user)
+    },[user])
+
     const handleChange = (e) => {
         const { name, value } = e.target
         setLocalUser(old => {
@@ -21,9 +25,6 @@ const SignUpModal = () => {
             })
         })
     }
-
-    console.log(localUser)
-    console.log(user)
 
     const handlePassword = (e) => {
         const {name, value} = e.target
@@ -36,9 +37,8 @@ const SignUpModal = () => {
         })
     }
 
-    const writeUserData = async (userData) => {
-        const docRef = await setDoc(doc(db, "users", userData.uid), user)
-        console.log('DocREF: ' + docRef)
+    const writeUserData = async (userData, userObj) => {
+        await setDoc(doc(db, "users", userData.uid), userObj)
     }
 
     const handleSubmit = (e) => {
@@ -58,7 +58,7 @@ const SignUpModal = () => {
             })
         })
 
-        createNewuser()
+        // createNewuser()
     }
 
     const createNewuser = () => {
