@@ -6,7 +6,7 @@ import { nanoid } from 'nanoid';
 import { useUserAuth } from '../contexts/UserAuthContext';
 
 const SignUpModal = (props) => {
-    const [user, setUser] = useState()
+    const [uid, setUid] = useState()
     const [localUser, setLocalUser] = useState()
     const [password, setPassword] = useState()
     const [error, setError] = useState()
@@ -14,10 +14,18 @@ const SignUpModal = (props) => {
     const { authUser } = useUserAuth();
 
     useEffect(() => {
-        if(authUser && user){
-            writeUserData(authUser.uid, user)
-        }
-    }, [user])
+        // if (localUser?.created_at) {
+        //     console.log('local if')
+        //     if (authUser?.uid) {
+        //         console.log('yay')
+        //         writeUserData(uid)
+        //     }
+        // }
+
+        console.log(authUser?.uid)
+    }, [authUser])
+
+    console.log(uid)
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -40,37 +48,40 @@ const SignUpModal = (props) => {
         })
     }
 
-    const writeUserData = async (userId, userObj) => {
-        await setDoc(doc(db, "users", userId), userObj)
+    const writeUserData = async (userId) => {
+        await setDoc(doc(db, "users", userId), { ...localUser })
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         setError("")
-        const date = new Date()
-        const time = date.getTime().toString()
+        const time = Date.now()
         const newId = nanoid()
-        setUser({
-                ...localUser,
+        setLocalUser((old) => {
+            return ({
+                ...old,
                 created_at: time,
                 id: newId,
                 description: "",
                 followers_count: null,
                 profile_image: "",
+            })
         })
-
         handleSignUp()
+
     }
+    console.log(localUser)
 
     const handleSignUp = async () => {
         if (password.password === password.confirmPassword) {
             setError('')
             try {
-                await signUp(localUser.email, password.password)
+                const result= await signUp(localUser.email, password.password)
+                setUid({...result})
             } catch (err) {
                 setError(err.message)
             }
-        }else{
+        } else {
             setError('Passwords must match')
         }
     }
@@ -88,7 +99,7 @@ const SignUpModal = (props) => {
                 <br></br>
                 <button>Submit</button>
             </form>
-            <h5>Alright have an account? <span className='login--button' onClick={() => {props.setNewUser(false)}}>Login now.</span></h5>
+            <h5>Alright have an account? <span className='login--button' onClick={() => { props.setNewUser(false) }}>Login now.</span></h5>
         </div>
     )
 }
