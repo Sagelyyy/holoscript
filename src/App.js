@@ -1,5 +1,6 @@
 import './App.css';
 import { Outlet, Link } from "react-router-dom"
+import Logout from './components/Logout';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
           <Link className="nav--link" to="/profile">profile</Link>
           <Link className="nav--link" to="/messages">messages</Link> 
           <Link className="nav--link" to="/notifications">notifications</Link>
+          <Logout />
         </div>
       </nav>
       <div className='content--container'>

@@ -7,32 +7,41 @@ import {
 } from "firebase/auth"
 import { auth } from "../firebase";
 
-const UserAuthContext = createContext();
-
+const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
-    const [user, setUser] = useState("")
+  const [authUser, setAuthUser] = useState({});
 
-    function signUp(email, password) {
-        return createUserWithEmailAndPassword(auth, email, password);
-    }
+  function logIn(email, password) {
+    return signInWithEmailAndPassword(auth, email, password);
+  }
+  function signUp(email, password) {
+    return createUserWithEmailAndPassword(auth, email, password);
+  }
+  function logOut() {
+    return signOut(auth);
+  }
 
-    function logIn(email, password) {
-        return signInWithEmailAndPassword(auth, email, password);
-    }
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
+      console.log("Auth", currentuser);
+      setAuthUser(currentuser);
+    });
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser)
-        })
-        return () => {
-            unsubscribe();
-        }
-    }, [])
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
-    return <UserAuthContextProvider.Provider value={{ user, signUp }}>{children}</UserAuthContextProvider.Provider>
+  return (
+    <userAuthContext.Provider
+      value={{ authUser, logIn, signUp, logOut }}
+    >
+      {children}
+    </userAuthContext.Provider>
+  );
 }
 
 export function useUserAuth() {
-    return useContext(UserAuthContext)
+  return useContext(userAuthContext);
 }

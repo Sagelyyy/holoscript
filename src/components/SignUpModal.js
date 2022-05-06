@@ -4,17 +4,21 @@ import { auth, db } from "../firebase";
 import { setDoc, doc } from 'firebase/firestore';
 import { nanoid } from 'nanoid';
 import { useUserAuth } from '../contexts/UserAuthContext';
+import { Link } from 'react-router-dom';
 
 const SignUpModal = () => {
-
     const [user, setUser] = useState()
     const [localUser, setLocalUser] = useState()
     const [password, setPassword] = useState()
     const [error, setError] = useState()
     const { signUp } = useUserAuth();
+    const { authUser } = useUserAuth();
 
     useEffect(() => {
-        console.log(user)
+        if(authUser && user){
+            console.log('UE')
+            writeUserData(authUser.uid, user)
+        }
     }, [user])
 
     const handleChange = (e) => {
@@ -38,8 +42,8 @@ const SignUpModal = () => {
         })
     }
 
-    const writeUserData = async (userData, userObj) => {
-        await setDoc(doc(db, "users", userData.uid), userObj)
+    const writeUserData = async (userId, userObj) => {
+        await setDoc(doc(db, "users", userId), userObj)
     }
 
     const handleSubmit = async (e) => {
@@ -48,21 +52,28 @@ const SignUpModal = () => {
         const date = new Date()
         const time = date.getTime().toString()
         const newId = nanoid()
-        setUser(old => {
-            return ({
+        setUser({
                 ...localUser,
                 created_at: time,
                 id: newId,
                 description: "",
                 followers_count: null,
                 profile_image: "",
-
-            })
         })
-        try {
-            await signUp(user.email, password.password)
-        } catch (err) {
-            setError(err.message)
+
+        handleSignUp()
+    }
+
+    const handleSignUp = async () => {
+        if (password.password === password.confirmPassword) {
+            setError('')
+            try {
+                await signUp(localUser.email, password.password)
+            } catch (err) {
+                setError(err.message)
+            }
+        }else{
+            setError('Passwords must match')
         }
     }
 
@@ -75,7 +86,7 @@ const SignUpModal = () => {
                 <input onChange={handleChange} name="username" placeholder="username"></input>
                 <input onChange={handleChange} name="email" placeholder="email@address.com"></input>
                 <input onChange={handlePassword} name="password" placeholder="password" type='password'></input>
-                <input placeholder="confirm password" type='password'></input>
+                <input onChange={handlePassword} name="confirmPassword" placeholder="confirm password" type='password'></input>
                 <br></br>
                 <button>Submit</button>
             </form>

@@ -1,0 +1,16 @@
+.modal--container--login{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    width: 15rem;
+    height: 10rem;
+    background-color: grey;
+    border: 2px solid black;
+    margin-left: 10rem;
+    margin-top: 0.1rem;
+    gap: 0.5rem;
+    z-index: 2;
+}
