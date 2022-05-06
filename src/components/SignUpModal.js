@@ -4,9 +4,8 @@ import { auth, db } from "../firebase";
 import { setDoc, doc } from 'firebase/firestore';
 import { nanoid } from 'nanoid';
 import { useUserAuth } from '../contexts/UserAuthContext';
-import { Link } from 'react-router-dom';
 
-const SignUpModal = () => {
+const SignUpModal = (props) => {
     const [user, setUser] = useState()
     const [localUser, setLocalUser] = useState()
     const [password, setPassword] = useState()
@@ -16,7 +15,6 @@ const SignUpModal = () => {
 
     useEffect(() => {
         if(authUser && user){
-            console.log('UE')
             writeUserData(authUser.uid, user)
         }
     }, [user])
@@ -90,7 +88,7 @@ const SignUpModal = () => {
                 <br></br>
                 <button>Submit</button>
             </form>
-            <h5>Alright have an account? Login now.</h5>
+            <h5>Alright have an account? <span className='login--button' onClick={() => {props.setNewUser(false)}}>Login now.</span></h5>
         </div>
     )
 }

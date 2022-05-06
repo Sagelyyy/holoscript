@@ -14,3 +14,9 @@
     gap: 0.5rem;
     z-index: 2;
 }
+
+.login--button:hover{
+    cursor: pointer;
+    color: aqua;
+    text-decoration: underline;
+}

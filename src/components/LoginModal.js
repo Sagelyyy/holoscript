@@ -4,7 +4,7 @@ import { useUserAuth } from "../contexts/UserAuthContext"
 import { nanoid } from "nanoid"
 
 
-const LoginModal = () => {
+const LoginModal = (props) => {
   const [user, setUser] = useState()
   const [localUser, setLocalUser] = useState()
   const [password, setPassword] = useState()
@@ -64,13 +64,13 @@ const handleLogin = async () => {
 
   return (
     <div className="modal--container--login">
-      <h1>Login and start chatting.</h1>
+      <h1>Log in and start chatting.</h1>
       {error && <h5>{error}</h5>}
       <form onSubmit={handleSubmit}>
         <input name="email" onChange={handleChange} placeholder="email@address.com"></input>
         <input name="password" onChange={handlePassword} placeholder="password" type="password"></input>
         <button>Submit</button>
-        <h5>New user? Sign up now.</h5>
+        <h5>New user? <span className='signup--button' onClick={() => {props.setNewUser(true)}}>Sign up now.</span></h5>
       </form>
     </div>
   )
