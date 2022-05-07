@@ -10,6 +10,7 @@ const LoginModal = (props) => {
   const [password, setPassword] = useState()
   const [error, setError] = useState()
   const { logIn } = useUserAuth() || {};
+  const { authUser } = useUserAuth()
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -62,7 +63,7 @@ const handleLogin = async () => {
         }
 }
 
-if(!props.newUser){
+if(!props.newUser && !authUser){
   return (
     <div className="modal--container--login">
       <h1>Log in and start chatting.</h1>

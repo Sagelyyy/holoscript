@@ -1,21 +1,35 @@
 import { useEffect, useState } from "react";
 import { useUserAuth } from "../contexts/UserAuthContext"
-import useFirebase from "../hooks/useFirebase";
-import useUserQuery from "../hooks/useUserQuery";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 
 const AccountTab = () => {
     const { authUser } = useUserAuth()
-    const [user] = useUserQuery(authUser?.uid)
     const [showTab, setShowTab] = useState(false)
+    const [loading, setLoading] = useState(true)
+    const [user, setUser] = useState()
 
 
-    console.log(user)
-    console.log(authUser)
+    const getUserData = async (uid) => {
+        setLoading(true)
+        const docRef = doc(db, 'users', uid)
+        const docSnap = await getDoc(docRef)
 
+        if(docSnap.exists()){
+            console.log(docSnap.data())
+            setUser(docSnap.data())
+            setLoading(false)
+        } else {
+            console.log('No Doc!')
+            setLoading(false)
+        }
+
+    }  
 
     useEffect(() => {
         if (authUser) {
+            getUserData(authUser.uid)
             setShowTab(true)
         } else {
             setShowTab(false)
@@ -25,10 +39,7 @@ const AccountTab = () => {
     if (showTab) {
         return (
             <div>
-                <h1>
-                    <p>Test</p>
-                    {user ? user.username : null}
-                </h1>
+                {!loading && <h1>{user.username}</h1>}
             </div>
         )
     }

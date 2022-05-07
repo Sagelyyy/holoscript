@@ -6,6 +6,7 @@ import { nanoid } from 'nanoid';
 import { useUserAuth } from '../contexts/UserAuthContext';
 
 const SignUpModal = (props) => {
+    const [showModal, setShowModal] = useState(true)
     const [uid, setUid] = useState()
     const [localUser, setLocalUser] = useState({
         created_at: null,
@@ -49,7 +50,17 @@ const SignUpModal = (props) => {
     }
 
     const writeUserData = async (userId) => {
+
         await setDoc(doc(db, "users", userId), { ...localUser })
+            .then(() => {
+                console.log('Sent Data')
+                setShowModal(false)
+            })
+            .catch((error) => {
+                setError(error)
+            })
+
+
     }
 
     const handleSubmit = async (e) => {
@@ -85,6 +96,7 @@ const SignUpModal = (props) => {
         }
     }
 
+    if (showModal && !authUser) {
         return (
             <div className="modal--container">
                 <h1>Join today and start chatting.</h1>
@@ -100,6 +112,7 @@ const SignUpModal = (props) => {
                 <h5>Alright have an account? <span className='login--button' onClick={() => { props.setNewUser(false) }}>Login now.</span></h5>
             </div>
         )
+    }
 }
 
 export default SignUpModal
