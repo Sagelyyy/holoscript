@@ -7,6 +7,8 @@ const Logout = () => {
     const { logOut } = useUserAuth();
     const { authUser } = useUserAuth();
 
+    
+
     return(
         <div>
         {authUser && <button onClick={() => logOut(auth)}>Logout</button>}

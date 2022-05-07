@@ -7,25 +7,25 @@ import { useUserAuth } from '../contexts/UserAuthContext';
 
 const SignUpModal = (props) => {
     const [uid, setUid] = useState()
-    const [localUser, setLocalUser] = useState()
+    const [localUser, setLocalUser] = useState({
+        created_at: null,
+        id: null,
+        description: "",
+        followers_count: null,
+        profile_image: "",
+    })
     const [password, setPassword] = useState()
     const [error, setError] = useState()
     const { signUp } = useUserAuth();
-    const { authUser } = useUserAuth();
+    let { authUser } = useUserAuth();
 
     useEffect(() => {
-        // if (localUser?.created_at) {
-        //     console.log('local if')
-        //     if (authUser?.uid) {
-        //         console.log('yay')
-        //         writeUserData(uid)
-        //     }
-        // }
-
-        console.log(authUser?.uid)
-    }, [authUser])
-
-    console.log(uid)
+        if (localUser.created_at !== null) {
+            if (uid) {
+                writeUserData(uid)
+            }
+        }
+    }, [uid])
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -68,40 +68,38 @@ const SignUpModal = (props) => {
             })
         })
         handleSignUp()
-
     }
-    console.log(localUser)
 
     const handleSignUp = async () => {
         if (password.password === password.confirmPassword) {
             setError('')
             try {
-                const result= await signUp(localUser.email, password.password)
-                setUid({...result})
+                const result = await signUp(localUser.email, password.password)
+                setUid(result.user.uid)
             } catch (err) {
                 setError(err.message)
+            } finally {
             }
         } else {
             setError('Passwords must match')
         }
     }
 
-
-    return (
-        <div className="modal--container">
-            <h1>Join today and start chatting.</h1>
-            {error && <h5>{error}</h5>}
-            <form onSubmit={handleSubmit}>
-                <input onChange={handleChange} name="username" placeholder="username"></input>
-                <input onChange={handleChange} name="email" placeholder="email@address.com"></input>
-                <input onChange={handlePassword} name="password" placeholder="password" type='password'></input>
-                <input onChange={handlePassword} name="confirmPassword" placeholder="confirm password" type='password'></input>
-                <br></br>
-                <button>Submit</button>
-            </form>
-            <h5>Alright have an account? <span className='login--button' onClick={() => { props.setNewUser(false) }}>Login now.</span></h5>
-        </div>
-    )
+        return (
+            <div className="modal--container">
+                <h1>Join today and start chatting.</h1>
+                {error && <h5>{error}</h5>}
+                <form onSubmit={handleSubmit}>
+                    <input onChange={handleChange} name="username" placeholder="username"></input>
+                    <input onChange={handleChange} name="email" placeholder="email@address.com"></input>
+                    <input onChange={handlePassword} name="password" placeholder="password" type='password'></input>
+                    <input onChange={handlePassword} name="confirmPassword" placeholder="confirm password" type='password'></input>
+                    <br></br>
+                    <button>Submit</button>
+                </form>
+                <h5>Alright have an account? <span className='login--button' onClick={() => { props.setNewUser(false) }}>Login now.</span></h5>
+            </div>
+        )
 }
 
 export default SignUpModal

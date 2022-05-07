@@ -62,6 +62,7 @@ const handleLogin = async () => {
         }
 }
 
+if(!props.newUser){
   return (
     <div className="modal--container--login">
       <h1>Log in and start chatting.</h1>
@@ -69,11 +70,13 @@ const handleLogin = async () => {
       <form onSubmit={handleSubmit}>
         <input name="email" onChange={handleChange} placeholder="email@address.com"></input>
         <input name="password" onChange={handlePassword} placeholder="password" type="password"></input>
+        <br></br>
         <button>Submit</button>
         <h5>New user? <span className='signup--button' onClick={() => {props.setNewUser(true)}}>Sign up now.</span></h5>
       </form>
     </div>
   )
+}
 }
 
 export default LoginModal

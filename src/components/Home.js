@@ -14,8 +14,8 @@ const Home = () => {
         <div className="home--container">
             <h1 style={{color: 'white'}}>Home</h1>
             <Post />
-            {!authUser && newUser && <SignUpModal newUser={newUser} setNewUser={setNewUser}/>}
-            {!authUser && !newUser && <LoginModal newUser={newUser} setNewUser={setNewUser}/>}
+            { <SignUpModal newUser={newUser} setNewUser={setNewUser}/>}
+            {!authUser ?<LoginModal newUser={newUser} setNewUser={setNewUser}/> : null}
         </div>
 
     )

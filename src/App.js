@@ -1,8 +1,10 @@
 import './App.css';
 import { Outlet, Link } from "react-router-dom"
 import Logout from './components/Logout';
+import AccountTab from './components/AccountTab';
 
 function App() {
+
   return (
     <div className='app--container'>
       <nav className='app--menu'>
@@ -12,6 +14,7 @@ function App() {
           <Link className="nav--link" to="/messages">messages</Link> 
           <Link className="nav--link" to="/notifications">notifications</Link>
           <Logout />
+          <AccountTab />
         </div>
       </nav>
       <div className='content--container'>
