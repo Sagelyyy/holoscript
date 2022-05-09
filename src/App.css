@@ -43,3 +43,12 @@ nav a:hover{text-decoration: underline;}
   border-left: 1px solid gray;
   border-right: 1px solid gray;
 }
+
+.account--container{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  align-self: flex-end;
+  height: 50vh;
+  justify-content: flex-end;
+}

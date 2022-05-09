@@ -1,45 +1,57 @@
+import './AccountTab.css'
 import { useEffect, useState } from "react";
-import { useUserAuth } from "../contexts/UserAuthContext"
+import { useUserAuth } from "../contexts/UserAuthContext";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
-
-
+import Logout from './Logout';
 const AccountTab = () => {
+
     const { authUser } = useUserAuth()
-    const [showTab, setShowTab] = useState(false)
-    const [loading, setLoading] = useState(true)
     const [user, setUser] = useState()
-
-
-    const getUserData = async (uid) => {
-        setLoading(true)
-        const docRef = doc(db, 'users', uid)
-        const docSnap = await getDoc(docRef)
-
-        if(docSnap.exists()){
-            console.log(docSnap.data())
-            setUser(docSnap.data())
-            setLoading(false)
-        } else {
-            console.log('No Doc!')
-            setLoading(false)
-        }
-
-    }  
+    const [showOptions, setShowOptions] = useState(false)
+    const [showTab, setShowTab] = useState(false)
 
     useEffect(() => {
-        if (authUser) {
-            getUserData(authUser.uid)
-            setShowTab(true)
-        } else {
+        if (authUser?.uid != null) {
+            getUserData()
+            setShowOptions(false)
+        }else{
             setShowTab(false)
+            setShowOptions(false)
         }
     }, [authUser])
 
-    if (showTab) {
+    const getUserData = async () => {
+        if (authUser != null) {
+            const userRef = doc(db, 'users', authUser.uid)
+            const docSnap = await getDoc(userRef)
+            if (docSnap.exists()) {
+                setUser(docSnap.data());
+                setShowTab(true)
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such user!");
+            }
+        }
+    }
+
+    const handleOptions = () => {
+        setShowOptions((old) => !old)
+    }
+
+    if (user && showTab) {
         return (
             <div>
-                {!loading && <h1>{user.username}</h1>}
+                <div className='accountTab--options--container'>
+                    {showOptions && <ul className='accountTab--options'>
+                        <li><Logout /></li>
+                    </ul>}
+                </div>
+                <div onClick={handleOptions} className="accountTab--container">
+                    {user?.profile_image && <img src={user?.profile_image}></img>}
+                    {user && <h2 className='accountTab--username'>{user.username}</h2>}
+                    {user && <h4 className='accountTab--options'>...</h4>}
+                </div>
             </div>
         )
     }

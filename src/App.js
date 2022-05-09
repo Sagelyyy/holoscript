@@ -11,14 +11,15 @@ function App() {
         <div className='nav--links--container'>
           <Link className="nav--link" to="/">Home</Link>
           <Link className="nav--link" to="/profile">profile</Link>
-          <Link className="nav--link" to="/messages">messages</Link> 
+          <Link className="nav--link" to="/messages">messages</Link>
           <Link className="nav--link" to="/notifications">notifications</Link>
-          <Logout />
-          <AccountTab />
+        </div>
+        <div className='account--container'>
+        <AccountTab />
         </div>
       </nav>
       <div className='content--container'>
-      <Outlet />
+        <Outlet />
       </div>
       <div className='app--sidebar'>
       </div>

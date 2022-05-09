@@ -1,111 +1,93 @@
 import './SignUpModal.css'
-import { useContext, useEffect, useState } from "react"
-import { auth, db } from "../firebase";
-import { setDoc, doc } from 'firebase/firestore';
-import { nanoid } from 'nanoid';
-import { useUserAuth } from '../contexts/UserAuthContext';
+import { useEffect, useState } from 'react'
+import { useUserAuth } from '../contexts/UserAuthContext'
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const SignUpModal = (props) => {
-    const [showModal, setShowModal] = useState(true)
-    const [uid, setUid] = useState()
-    const [localUser, setLocalUser] = useState({
-        created_at: null,
-        id: null,
-        description: "",
-        followers_count: null,
-        profile_image: "",
-    })
+
+    const { authUser } = useUserAuth();
+    const { signUp } = useUserAuth();
+    const [user, setUser] = useState()
     const [password, setPassword] = useState()
     const [error, setError] = useState()
-    const { signUp } = useUserAuth();
-    let { authUser } = useUserAuth();
+    const [uid, setUid] = useState()
+    const [showModal, setShowModal] = useState(true)
 
     useEffect(() => {
-        if (localUser.created_at !== null) {
-            if (uid) {
-                writeUserData(uid)
-            }
+        if (authUser != null) {
+            setUid(authUser.uid)
+            setShowModal(false)
+        } else {
+            setShowModal(true)
+            setUid(null)
         }
-    }, [uid])
+    }, [authUser])
 
     const handleChange = (e) => {
-        const { name, value } = e.target
-        setLocalUser(old => {
+        const { value, name } = e.target
+        setUser(old => {
             return ({
                 ...old,
-                [name]: value,
+                [name]: value
             })
         })
     }
 
     const handlePassword = (e) => {
-        const { name, value } = e.target
+        const { value, name } = e.target
         setPassword(old => {
             return ({
                 ...old,
                 [name]: value
             })
-
         })
     }
 
-    const writeUserData = async (userId) => {
-
-        await setDoc(doc(db, "users", userId), { ...localUser })
-            .then(() => {
-                console.log('Sent Data')
-                setShowModal(false)
+    const handlePasswordConfirm = (e) => {
+        const { value, name } = e.target
+        setPassword(old => {
+            return ({
+                ...old,
+                [name]: value
             })
-            .catch((error) => {
-                setError(error)
-            })
-
-
+        })
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
         setError("")
         const time = Date.now()
-        const newId = nanoid()
-        setLocalUser((old) => {
-            return ({
-                ...old,
-                created_at: time,
-                id: newId,
-                description: "",
-                followers_count: null,
-                profile_image: "",
-            })
-        })
-        handleSignUp()
-    }
-
-    const handleSignUp = async () => {
+        e.preventDefault()
         if (password.password === password.confirmPassword) {
-            setError('')
             try {
-                const result = await signUp(localUser.email, password.password)
-                setUid(result.user.uid)
+                await signUp(user.email, password.password)
+                    .then((cred) => {
+                        setDoc(doc(db, 'users', cred.user.uid), {
+                            ...user,
+                            created_at: time,
+                            id: cred.user.uid,
+                            description: "",
+                            followers_count: null,
+                            profile_image: "",
+                        })
+                    })
             } catch (err) {
                 setError(err.message)
-            } finally {
+                console.log(error)
             }
-        } else {
-            setError('Passwords must match')
         }
     }
 
-    if (showModal && !authUser) {
+    if (showModal) {
         return (
             <div className="modal--container">
                 <h1>Join today and start chatting.</h1>
-                {error && <h5>{error}</h5>}
                 <form onSubmit={handleSubmit}>
+                    {error && <h5>{error}</h5>}
                     <input onChange={handleChange} name="username" placeholder="username"></input>
                     <input onChange={handleChange} name="email" placeholder="email@address.com"></input>
                     <input onChange={handlePassword} name="password" placeholder="password" type='password'></input>
-                    <input onChange={handlePassword} name="confirmPassword" placeholder="confirm password" type='password'></input>
+                    <input onChange={handlePasswordConfirm} name="confirmPassword" placeholder="confirm password" type='password'></input>
                     <br></br>
                     <button>Submit</button>
                 </form>

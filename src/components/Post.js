@@ -1,45 +1,42 @@
 import { useState, useEffect } from 'react'
 import { useUserAuth } from '../contexts/UserAuthContext'
-import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../firebase";
 import './Post.css'
+import { nanoid } from 'nanoid';
 
 const Post = () => {
+
     const { authUser } = useUserAuth()
+    const [post, setPost] = useState({
+        post:''
+    })
     const [user, setUser] = useState()
-    const [loading, setLoading] = useState()
-    const [post, setPost] = useState()
+    const [submitted, setSubmitted] = useState(false)
 
-
-    console.log(post)
-
-    const getUserData = async (uid) => {
-        setLoading(true)
-        const docRef = doc(db, 'users', uid)
-        const docSnap = await getDoc(docRef)
-
-        if (docSnap.exists()) {
-            console.log(docSnap.data())
-            setUser(docSnap.data())
-            setLoading(false)
-        } else {
-            console.log('No Doc!')
-            setLoading(false)
+    useEffect(() => {
+        if (authUser?.uid != null) {
+            getUserData()
+        }else{
+            // other stuff
         }
-    }
+    }, [authUser])
 
-    const writeUserData = async (data) => {
-        const userDocRef = doc(db, 'users', authUser.uid)
-        await updateDoc(userDocRef, { "posts": arrayUnion(data.post) })
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        writeUserData(post)
-    }
+    useEffect(() => {
+        if(submitted && post.user){
+            writePostData(post)
+            setSubmitted(false)
+            setPost((old) => {
+                return({
+                    ...old,
+                    post: ''
+                })
+            })
+        }
+    }, [post])
 
     const handleChange = (e) => {
-        const { name, value } = e.target
+        const {name, value} = e.target
         setPost(old => {
             return ({
                 ...old,
@@ -48,23 +45,49 @@ const Post = () => {
         })
     }
 
-    useEffect(() => {
-        if (authUser) {
-            getUserData(authUser.uid)
-        } else {
-        }
-    }, [authUser])
-
-    if (user) {
-        return (
-            <div className="post--container">
-                <form onSubmit={handleSubmit} className='post--form'>
-                    <textarea onChange={handleChange} name='post' className='post--textarea' placeholder='Whats happening?'></textarea>
-                    <button className='post--button'>Submit</button>
-                </form>
-            </div>
-        )
+    const handleSubmit = async (e) => {
+        setPost((old) => {
+            return({
+                ...old,
+                time: Date.now(),
+                user: user.username,
+                id: nanoid()
+            })
+        })
+        e.preventDefault()
+        setSubmitted(true)
     }
+
+    const writePostData = async (post) => {
+        const userDocRef = doc(db, 'users', authUser.uid)
+        await updateDoc(userDocRef, { "posts": arrayUnion(post) })
+        const scriptsRef = doc(db, 'allScripts', 'scriptdata')
+        await updateDoc(scriptsRef, { "scripts": arrayUnion(post) })
+    }
+
+    const getUserData = async () => {
+        if (authUser != null) {
+            const userRef = doc(db, 'users', authUser.uid)
+            const docSnap = await getDoc(userRef)
+            if (docSnap.exists()) {
+                setUser(docSnap.data());
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such user!");
+            }
+        }
+    }
+
+    
+
+    return (
+        <div className="post--container">
+            <form onSubmit={handleSubmit} className='post--form'>
+                <textarea onChange={handleChange} name='post' value={post.post} className='post--textarea' placeholder='Whats happening?'></textarea>
+                <button className='post--button'>Submit</button>
+            </form>
+        </div>
+    )
 }
 
 export default Post
