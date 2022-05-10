@@ -1,5 +1,30 @@
 * { margin: 0; padding: 0; font-family: 'Segoe UI';}
 
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 28px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
 .app--container{
   display: flex;
   height: 100%;
@@ -11,7 +36,7 @@
   gap: 10px;
   display: flex;
   flex-direction: column;
-  margin-left: 30rem;
+  margin-left: 20rem;
   text-decoration: none;
   color: white;
 }
@@ -19,9 +44,13 @@
 nav a, nav a:visited{
   text-decoration: none;
   color: white;
+  text-align: left;
+  font-size: 40px;
 }
 
-nav a:hover{text-decoration: underline;}
+nav a:hover{text-decoration: underline; border-radius: 20px; width: fit-content;}
+
+.nav--link:hover{background-color: rgba(231, 233, 234, 0.1);}
 
 .app--menu{
   height: 100%;
@@ -49,6 +78,6 @@ nav a:hover{text-decoration: underline;}
   flex-direction: column;
   align-items: flex-end;
   align-self: flex-end;
-  height: 50vh;
+  height: 40vh;
   justify-content: flex-end;
 }

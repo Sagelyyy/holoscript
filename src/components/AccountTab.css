@@ -7,6 +7,7 @@
     width: 125px;
     border-radius: 20px;
     text-align: center;
+    height: 20px;
 }
 
 .accountTab--container:hover{

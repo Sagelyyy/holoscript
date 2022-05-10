@@ -27,15 +27,15 @@ const PostFeed = () => {
         }
     }
 
-    const postElements = postData?.scripts.map((item) => {
+    const postElements = postData?.scripts.map((item, i) => {
         return(
-            <div className='postFeed--container'>
+            <div key={i} className='postFeed--container'>
                 <h3 className='postFeed--user'>{item.user}</h3>
                 <h4 className='postFeed--content'>{item.post}</h4>
                 <p>TODO: ADD BUTTONS!</p>
             </div>
         )
-    })
+    }).reverse()
 
 
     return (

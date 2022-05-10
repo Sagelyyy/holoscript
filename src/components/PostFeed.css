@@ -4,6 +4,10 @@
     overflow-wrap: break-word;
     height: 80vh;
 }
+.postFeed--content--container::-webkit-scrollbar{
+    display: none;
+}
+
 
 .postFeed--container{
     display: flex;
