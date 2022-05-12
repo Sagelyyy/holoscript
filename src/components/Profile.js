@@ -1,7 +1,7 @@
 import './Profile.css'
 import { useUserAuth } from '../contexts/UserAuthContext'
 import { useEffect, useState } from 'react'
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL, listAll } from "firebase/storage";
 import newUser from '../images/newUser.jpg'
@@ -23,6 +23,31 @@ const Profile = () => {
         }
     }, [authUser])
 
+    useEffect(() => {
+        if(imgPath != null){
+            setUser((old) => {
+                return({
+                    ...old,
+                    profile_image: imgPath
+                })
+            })
+        }
+    }, [imgPath])
+
+
+    useEffect(() => {
+        if(user){
+            writeUserImage()
+        }
+    },[user?.profile_image])
+
+
+    console.log(user)
+
+    const writeUserImage = async () => {
+        await setDoc(doc(db, 'users', authUser.uid), user)
+    }
+
     const getUserImage = () => {
         const listRef = ref(storage, `/images/users/${authUser.uid}`)
         // Find all the prefixes and items.
@@ -32,12 +57,7 @@ const Profile = () => {
                     console.log(`folderRef `, folderRef)
                 });
                 res.items.forEach((itemRef) => {
-                   setUser((old) => {
-                       return({
-                           ...old,
-                           profile_image: `/users/${authUser.uid}/${itemRef.name}`
-                       })
-                   })
+                    console.log(itemRef)
                 });
             }).catch((error) => {
                 // Uh-oh, an error occurred!
