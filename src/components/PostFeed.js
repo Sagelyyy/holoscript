@@ -1,7 +1,7 @@
 import './PostFeed.css'
 import { useUserAuth } from '../contexts/UserAuthContext'
 import { useEffect, useState } from 'react'
-import { getDoc, doc } from 'firebase/firestore'
+import { getDoc, doc, onSnapshot } from 'firebase/firestore'
 import { db } from '../firebase'
 
 const PostFeed = () => {
@@ -11,9 +11,12 @@ const PostFeed = () => {
     const [user, setUser] = useState()
 
     useEffect(() => {
-        if (authUser.uid != null) {
-            getPostData()
+        if (authUser?.uid != null) {
             getUserData()
+            const unsub = onSnapshot(doc(db, "allScripts", "scriptdata"), (doc) => {
+                setPostData(doc.data())
+            });
+            return unsub
         }
     }, [authUser])
 
@@ -24,21 +27,8 @@ const PostFeed = () => {
             if (docSnap.exists()) {
                 setUser(docSnap.data());
             } else {
-                // doc.data() will be undefined in this case
                 console.log("No such user!");
             }
-        }
-    }
-
-    const getPostData = async () => {
-        const postRef = doc(db, "allScripts", "scriptdata");
-        const postSnap = await getDoc(postRef);
-        if (postSnap.exists()) {
-            console.log("Document data:", postSnap.data());
-            setPostData(postSnap.data())
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No posts!");
         }
     }
 

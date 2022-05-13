@@ -48,7 +48,7 @@ const AccountTab = () => {
                     </ul>}
                 </div>
                 <div onClick={handleOptions} className="accountTab--container">
-                    {user?.profile_image && <img src={user?.profile_image}></img>}
+                    {user?.profile_image && <img className="accountTab--avatar" src={user?.profile_image}></img>}
                     {user && <h2 className='accountTab--username'>{user.username}</h2>}
                     {user && <h4 className='accountTab--options'>...</h4>}
                 </div>

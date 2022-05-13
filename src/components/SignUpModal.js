@@ -68,7 +68,7 @@ const SignUpModal = (props) => {
                             id: cred.user.uid,
                             description: "",
                             followers_count: null,
-                            profile_image: "",
+                            profile_image: "https://firebasestorage.googleapis.com/v0/b/holoscript-b4ec7.appspot.com/o/images%2Fusers%2Fdefault%2FnewUser.jpg?alt=media&token=55eecec7-abdd-41b0-90dc-bedea86ec998",
                         })
                     })
             } catch (err) {

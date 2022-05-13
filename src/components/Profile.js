@@ -24,9 +24,9 @@ const Profile = () => {
     }, [authUser])
 
     useEffect(() => {
-        if(imgPath != null){
+        if (imgPath != null) {
             setUser((old) => {
-                return({
+                return ({
                     ...old,
                     profile_image: imgPath
                 })
@@ -36,13 +36,11 @@ const Profile = () => {
 
 
     useEffect(() => {
-        if(user){
+        if (user) {
             writeUserImage()
         }
-    },[user?.profile_image])
+    }, [user?.profile_image])
 
-
-    console.log(user)
 
     const writeUserImage = async () => {
         await setDoc(doc(db, 'users', authUser.uid), user)
@@ -140,14 +138,22 @@ const Profile = () => {
         // showUpload(false)
     }
 
-    const scriptElements = user?.posts.map((item, i) => {
-        return (
-            <div key={i} className='userScripts--container'>
-                <h3 className='userScripts--user'>{item.user}</h3>
-                <h4 className='userScripts--content'>{item.post}</h4>
-            </div>
-        )
-    }).reverse()
+    const setupElements = () => {
+        if (user?.posts) {
+            const scriptElements = user?.posts.map((item, i) => {
+                return (
+                    <div key={i} className='userScripts--container'>
+                        <div className='userScripts--user--container'>
+                            <img className='userScripts--avatar' src={user?.profile_image} />
+                            <h3 className='userScripts--user'>{item.user}</h3>
+                        </div>
+                        <h4 className='userScripts--content'>{item.post}</h4>
+                    </div>
+                )
+            }).reverse()
+            return scriptElements
+        }
+    }
 
     if (user) {
         return (
@@ -165,7 +171,7 @@ const Profile = () => {
                 </div>
                 <div>
                     <h1 className='userScripts--title'>Your Scripts</h1>
-                    {scriptElements}
+                    {setupElements()}
                 </div>
             </div>
         )

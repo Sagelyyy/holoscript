@@ -54,6 +54,21 @@
     z-index: 1;
 }
 
+.userScripts--user--container{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.userScripts--avatar{
+    width: 10%;
+    border-radius: 50%;
+}
+
+.userScripts--user{
+    text-transform: capitalize;
+}
+
 .userScripts--title{
     margin-bottom: 1rem;
 }

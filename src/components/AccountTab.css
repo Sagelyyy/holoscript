@@ -19,6 +19,10 @@
     text-transform: capitalize;
 }
 
+.accountTab--avatar{
+    border-radius: 50%;
+}
+
 .accountTab--options--container{
     display: flex;
     justify-content: center;

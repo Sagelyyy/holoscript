@@ -31,6 +31,7 @@
 .postFeed--user--container{
     display: flex;
     flex: row;
+    gap: 1rem;
 }
 
 .postFeed--user--username{
@@ -40,4 +41,5 @@
 
 .postFeed--user--avatar{
     width: 10%;
+    border-radius: 50%;
 }
