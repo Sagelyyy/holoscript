@@ -51,7 +51,8 @@ const Post = () => {
                 ...old,
                 time: Date.now(),
                 user: user.username,
-                id: nanoid()
+                id: nanoid(),
+                user_profile_image: user?.profile_image
             })
         })
         e.preventDefault()

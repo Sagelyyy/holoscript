@@ -27,3 +27,17 @@
     cursor: pointer;
     background-color: rgba(231, 233, 234, 0.1);
 }
+
+.postFeed--user--container{
+    display: flex;
+    flex: row;
+}
+
+.postFeed--user--username{
+    text-transform: capitalize;
+    margin-top: 1.5rem;
+}
+
+.postFeed--user--avatar{
+    width: 10%;
+}
