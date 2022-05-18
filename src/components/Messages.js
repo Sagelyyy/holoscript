@@ -26,7 +26,7 @@ const Messages = () => {
             <div key={i} className='messages--container'>
                 <div className='messages--user--container'>
                     <img className="messages--user--avatar" src={message.user_profile_image} />
-                    <h3 className='messages--user--username'>{message.user}</h3>
+                    <h3 className='messages--user--username'>{message.sent_by}</h3>
                 </div>
                 <h4 className='messages--content'>{message.post}</h4>
                 <p>TODO: ADD BUTTONS!</p>
@@ -36,9 +36,9 @@ const Messages = () => {
 
 
     return (
-        <div>
+        <div className='message--content--container'>
         <h1>Messages</h1>
-        {messages.length > 0 ? messageElements : <h3>You have no messages.</h3>}
+        {messages?.length > 0 ? messageElements : <h3>You have no messages.</h3>}
         </div>
     )
 }

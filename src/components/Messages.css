@@ -1,0 +1,49 @@
+.messages--content--container{
+    overflow-y: auto;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+    height: 80vh;
+}
+.messages--content--container::-webkit-scrollbar{
+    display: none;
+}
+
+.messages--container{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid grey;
+    z-index: 1;
+}
+
+.messages--content{
+    text-align: center;
+    align-self: center;
+    padding: 3rem;
+    width: 100%;
+}
+
+.messages--content:hover{
+    cursor: pointer;
+    background-color: rgba(231, 233, 234, 0.1);
+}
+
+.messages--user--container{
+    display: flex;
+    flex: row;
+    gap: 1rem;
+}
+
+.messages--user--username{
+    text-transform: capitalize;
+    margin-top: 1.5rem;
+}
+
+.messages--user--username:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.messages--user--avatar{
+    width: 10%;
+    border-radius: 50%;
+}
