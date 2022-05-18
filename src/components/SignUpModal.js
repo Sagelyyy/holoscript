@@ -1,7 +1,7 @@
 import './SignUpModal.css'
 import { useEffect, useState } from 'react'
-import { useUserAuth } from '../contexts/UserAuthContext'
-import { doc, setDoc } from 'firebase/firestore';
+import { useUserAuth, } from '../contexts/UserAuthContext'
+import { doc, setDoc, collection, query, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 
 const SignUpModal = (props) => {
@@ -13,6 +13,7 @@ const SignUpModal = (props) => {
     const [error, setError] = useState()
     const [uid, setUid] = useState()
     const [showModal, setShowModal] = useState(true)
+    const [allusers, setAllUsers] = useState()
 
     useEffect(() => {
         if (authUser != null) {
@@ -20,9 +21,26 @@ const SignUpModal = (props) => {
             setShowModal(false)
         } else {
             setShowModal(true)
+            getUserList()
             setUid(null)
         }
     }, [authUser])
+
+    const getUserList = async () => {
+        const q = query(collection(db, "users"));
+        const userList = []
+        const usernameList = []
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            userList.push(doc.data())
+        });
+
+        userList.map(item => {
+            usernameList.push(item.username.toLowerCase())
+        })
+
+        setAllUsers(usernameList)
+    }
 
     const handleChange = (e) => {
         const { value, name } = e.target
@@ -54,27 +72,37 @@ const SignUpModal = (props) => {
         })
     }
 
+    const validateUsername = (arr, user) => {
+        return allusers.some(arrVal => user.username.toLowerCase() === arrVal);
+    }
+
     const handleSubmit = async (e) => {
         setError("")
         const time = Date.now()
         e.preventDefault()
-        if (password.password === password.confirmPassword) {
-            try {
-                await signUp(user.email, password.password)
-                    .then((cred) => {
-                        setDoc(doc(db, 'users', cred.user.uid), {
-                            ...user,
-                            created_at: time,
-                            id: cred.user.uid,
-                            description: "",
-                            followers_count: null,
-                            profile_image: "https://firebasestorage.googleapis.com/v0/b/holoscript-b4ec7.appspot.com/o/images%2Fusers%2Fdefault%2FnewUser.jpg?alt=media&token=55eecec7-abdd-41b0-90dc-bedea86ec998",
+        if (!validateUsername(allusers, user)) {
+            if (password.password === password.confirmPassword) {
+                try {
+                    await signUp(user.email, password.password)
+                        .then((cred) => {
+                            setDoc(doc(db, 'users', cred.user.uid), {
+                                ...user,
+                                created_at: time,
+                                id: cred.user.uid,
+                                description: "",
+                                followers_count: null,
+                                messages: [],
+                                profile_image: "https://firebasestorage.googleapis.com/v0/b/holoscript-b4ec7.appspot.com/o/images%2Fusers%2Fdefault%2FnewUser.jpg?alt=media&token=55eecec7-abdd-41b0-90dc-bedea86ec998",
+                            })
                         })
-                    })
-            } catch (err) {
-                setError(err.message)
-                console.log(error)
+                } catch (err) {
+                    setError(err.message)
+                    console.log(error)
+                }
             }
+        }
+        else{
+            setError('Username taken')
         }
     }
 

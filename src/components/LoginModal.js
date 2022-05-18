@@ -15,7 +15,6 @@ const LoginModal = (props) => {
 
   useEffect(() => {
     if (authUser != null) {
-      console.log(authUser)
       setShowModal(false)
     } else {
       setShowModal(true)

@@ -55,7 +55,6 @@ const Profile = () => {
                     console.log(`folderRef `, folderRef)
                 });
                 res.items.forEach((itemRef) => {
-                    console.log(itemRef)
                 });
             }).catch((error) => {
                 // Uh-oh, an error occurred!

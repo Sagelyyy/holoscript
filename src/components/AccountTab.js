@@ -1,7 +1,7 @@
 import './AccountTab.css'
 import { useEffect, useState } from "react";
 import { useUserAuth } from "../contexts/UserAuthContext";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 import Logout from './Logout';
 const AccountTab = () => {
@@ -13,12 +13,18 @@ const AccountTab = () => {
 
     useEffect(() => {
         if (authUser?.uid != null) {
-            getUserData()
+            // getUserData()
             setShowOptions(false)
+            const unsub = onSnapshot(doc(db, 'users', authUser.uid), (doc) => {
+                setUser(doc.data())
+                setShowTab(true)
+            });
+            return unsub
         }else{
             setShowTab(false)
             setShowOptions(false)
         }
+    
     }, [authUser])
 
     const getUserData = async () => {

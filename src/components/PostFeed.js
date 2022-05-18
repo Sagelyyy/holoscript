@@ -1,7 +1,7 @@
 import './PostFeed.css'
 import { useUserAuth } from '../contexts/UserAuthContext'
 import { useEffect, useState } from 'react'
-import { getDoc, doc, onSnapshot } from 'firebase/firestore'
+import { getDoc, doc, onSnapshot, } from 'firebase/firestore'
 import { db } from '../firebase'
 
 const PostFeed = () => {
@@ -9,6 +9,9 @@ const PostFeed = () => {
     const { authUser } = useUserAuth()
     const [postData, setPostData] = useState()
     const [user, setUser] = useState()
+    const [allUsers, setAllUsers] = useState()
+
+    console.log(allUsers)
 
     useEffect(() => {
         if (authUser?.uid != null) {
@@ -18,6 +21,7 @@ const PostFeed = () => {
             });
             return unsub
         }
+
     }, [authUser])
 
     const getUserData = async () => {
