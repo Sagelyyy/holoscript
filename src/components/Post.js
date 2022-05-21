@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useUserAuth } from '../contexts/UserAuthContext'
-import { doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, getDoc, updateDoc, arrayUnion, setDoc, addDoc, collection } from "firebase/firestore";
 import { db } from "../firebase";
 import './Post.css'
 import { nanoid } from 'nanoid';
@@ -52,7 +52,9 @@ const Post = () => {
                 time: Date.now(),
                 user: user.username,
                 id: nanoid(),
-                user_profile_image: user?.profile_image
+                user_profile_image: user?.profile_image,
+                replies: [],
+                likes: 0,
             })
         })
         e.preventDefault()
@@ -60,10 +62,11 @@ const Post = () => {
     }
 
     const writePostData = async (post) => {
+        const newPost = nanoid()
         const userDocRef = doc(db, 'users', authUser.uid)
         await updateDoc(userDocRef, { "posts": arrayUnion(post) })
         const scriptsRef = doc(db, 'allScripts', 'scriptdata')
-        await updateDoc(scriptsRef, { "scripts": arrayUnion(post) })
+        await addDoc(collection(db, 'allScripts'), post)
     }
 
     const getUserData = async () => {

@@ -48,3 +48,17 @@
     width: 10%;
     border-radius: 50%;
 }
+
+.postFeed--buttons{
+    display: flex;
+    justify-content: space-around;
+}
+
+.postButton{
+    cursor: pointer;
+    transition: transform .2s;
+}
+
+.postButton:hover{
+    transform: scale(1.3);
+}

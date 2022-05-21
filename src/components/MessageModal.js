@@ -75,10 +75,6 @@ const MessageModal = (props) => {
     }
 
     const writeMessageData = async (message, user) => {
-
-        console.log(message)
-        console.log(user)
-        console.log(user[0].id)
         try {
             const recipientRef = doc(db, 'users', user[0].id)
             await updateDoc(recipientRef, { "messages": arrayUnion(message) })

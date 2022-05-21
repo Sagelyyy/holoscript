@@ -13,7 +13,6 @@ const Messages = () => {
 
     useEffect(() => {
         if (authUser?.uid != null) {
-            // getUserData()
             const unsub = onSnapshot(doc(db, 'users', authUser.uid), (doc) => {
                 setMessages(doc.data().messages)
             });
