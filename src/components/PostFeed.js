@@ -23,6 +23,7 @@ const PostFeed = () => {
                 querySnapshot.forEach((doc) => {
                     posts.push(doc.data())
                 })
+                posts.sort((a, b) => a.time - b.time).reverse()
                 setPostData(posts)
             })
             return unsub
@@ -42,20 +43,19 @@ const PostFeed = () => {
         }
     }
 
-
     const handleMessage = (username) => {
         setMessageSelection(username)
         setShowMessageModal((old) => !old)
     }
 
-    const checkLikedPosts = (arr, user) => {
+    const didUserLike = (arr, user) => {
         return arr.some(arrVal => user.username.toLowerCase() === arrVal)
     }
 
     const handleLike = async (postId) => {
         postData.map(async (item, i) => {
             if (item.id === postId) {
-                if (!checkLikedPosts(item.liked_by, user)) {
+                if (!didUserLike(item.liked_by, user)) {
                     const q = query(collection(db, 'allScripts'))
                     const querySnapshot = await getDocs(q)
                     querySnapshot.forEach((scr) => {
@@ -97,14 +97,14 @@ const PostFeed = () => {
                 </div>
                 <h4 className='postFeed--content'>{item.post}</h4>
                 <div className='postFeed--buttons'>
-                    <span onClick={() => handleLike(item.id)} className="material-icons postButton">favorite{item.likes && <span>{item.likes}</span>}</span>
+                    <span onClick={() => handleLike(item.id)} className="material-icons postButton">
+                        favorite{item.likes > 0 ? <span className='postFeed--likes'>{item.likes}</span> : null}</span>
                     <span className="material-icons postButton">forum</span>
                 </div>
 
             </div>
         )
     })
-
 
     return (
         <div className='postFeed--content--container'>

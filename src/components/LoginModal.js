@@ -47,7 +47,6 @@ const LoginModal = (props) => {
     setError('')
     try {
       await logIn(user.email, password.password)
-        .then((cred) => console.log(cred))
     } catch (err) {
       setError(err.message)
     }

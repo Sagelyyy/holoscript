@@ -55,6 +55,7 @@ const Post = () => {
                 user_profile_image: user?.profile_image,
                 replies: [],
                 likes: 0,
+                liked_by: []
             })
         })
         e.preventDefault()

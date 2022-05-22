@@ -49,9 +49,16 @@
     border-radius: 50%;
 }
 
+
 .postFeed--buttons{
     display: flex;
     justify-content: space-around;
+    height: 2.5rem;
+    align-items: baseline;
+}
+
+.postFeed--likes{
+    font-size: 1rem;
 }
 
 .postButton{
@@ -62,3 +69,4 @@
 .postButton:hover{
     transform: scale(1.3);
 }
+
