@@ -1,9 +1,12 @@
 import './App.css';
 import { Outlet, Link } from "react-router-dom"
-import Logout from './components/Logout';
 import AccountTab from './components/AccountTab';
+import { useUserAuth } from './contexts/UserAuthContext';
+import { useEffect } from 'react';
 
 function App() {
+
+  const { authUser } = useUserAuth();
 
   return (
     <div className='app--container'>
@@ -12,6 +15,8 @@ function App() {
           <Link className="nav--link" to="/"><span className="material-icons">
             home
           </span> Home</Link>
+          {authUser &&
+          <div className='nav--links--loggedIn--container'>
           <Link className="nav--link" to="/profile"><span className="material-icons">
             person
           </span> profile</Link>
@@ -20,7 +25,9 @@ function App() {
           </span> messages</Link>
           <Link className="nav--link" to="/notifications"><span className="material-icons">
             notifications
-          </span> notifications</Link>
+          </span> notifications</Link> 
+          </div>
+          }
         </div>
         <div className='account--container'>
           <AccountTab />

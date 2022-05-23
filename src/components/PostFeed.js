@@ -29,7 +29,9 @@ const PostFeed = () => {
             return unsub
         }
         setShowMessageModal(false)
+        setUser()
     }, [authUser])
+
 
     const getUserData = async () => {
         if (authUser != null) {
@@ -89,30 +91,49 @@ const PostFeed = () => {
     }
 
     const postElements = postData?.map((item, i) => {
-        return (
-            <div key={i} className='postFeed--container'>
-                <div className='postFeed--user--container'>
-                    <img className="postFeed--user--avatar" src={item.user_profile_image} />
-                    <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
+        if (item.liked_by.some(arrVal => user?.username === arrVal)) {
+            return (
+                <div key={i} className='postFeed--container'>
+                    <div className='postFeed--user--container'>
+                        <img className="postFeed--user--avatar" src={item.user_profile_image} />
+                        <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
+                    </div>
+                    <h4 className='postFeed--content'>{item.post}</h4>
+                    <div className='postFeed--buttons'>
+                        <span onClick={() => handleLike(item.id)} className="material-icons postButton liked">
+                            favorite{item.likes > 0 ? <span className='postFeed--likes liked'>{item.likes}</span> : null}</span>
+                        <span className="material-icons postButton">forum</span>
+                    </div>
                 </div>
-                <h4 className='postFeed--content'>{item.post}</h4>
-                <div className='postFeed--buttons'>
-                    <span onClick={() => handleLike(item.id)} className="material-icons postButton">
-                        favorite{item.likes > 0 ? <span className='postFeed--likes'>{item.likes}</span> : null}</span>
-                    <span className="material-icons postButton">forum</span>
+            )
+        } else {
+            return (
+                <div key={i} className='postFeed--container'>
+                    <div className='postFeed--user--container'>
+                        <img className="postFeed--user--avatar" src={item.user_profile_image} />
+                        <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
+                    </div>
+                    <h4 className='postFeed--content'>{item.post}</h4>
+                    <div className='postFeed--buttons'>
+                        <span onClick={() => handleLike(item.id)} className="material-icons postButton">
+                            favorite{item.likes > 0 ? <span className='postFeed--likes'>{item.likes}</span> : null}</span>
+                        <span className="material-icons postButton">forum</span>
+                    </div>
                 </div>
-
-            </div>
-        )
+            )
+        }
     })
 
-    return (
-        <div className='postFeed--content--container'>
-            {showMessageModal ? <MessageModal messageSelection={messageSelection} /> : null}
-            {postElements}
-        </div>
 
-    )
+    if (user) {
+        return (
+            <div className='postFeed--content--container'>
+                {showMessageModal ? <MessageModal messageSelection={messageSelection} /> : null}
+                {postElements}
+            </div>
+
+        )
+    }
 }
 
 export default PostFeed

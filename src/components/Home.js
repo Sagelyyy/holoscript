@@ -3,20 +3,29 @@ import Post from './Post'
 import SignUpModal from './SignUpModal'
 import LoginModal from './LoginModal'
 import { useUserAuth } from '../contexts/UserAuthContext'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PostFeed from './PostFeed'
-import { setUserProperties } from 'firebase/analytics'
 
 const Home = () => {
 
     const { authUser } = useUserAuth()
     const [newUser, setNewUser] = useState(false)
+    const [showModal, setShowModal] = useState(true)
+
+    useEffect(() => {
+        if (authUser != null) {
+            setShowModal(false)
+        } else {
+            setShowModal(true)
+        }
+    }, [authUser])
+
 
     return (
         <div className="home--container">
             <h1 style={{color: 'white'}}>Home</h1>
-            {newUser && <SignUpModal setNewUser={setNewUser}/>}
-            {!newUser && <LoginModal setNewUser={setNewUser}/>}
+            {newUser && showModal ? <SignUpModal setNewUser={setNewUser}/> : null}
+            {!newUser && showModal ? <LoginModal setNewUser={setNewUser}/> : null}
             <Post />
             <PostFeed />
         </div>
