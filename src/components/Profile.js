@@ -175,6 +175,10 @@ const Profile = () => {
             </div>
         )
     }
+
+    return(
+        <h1>Please Log in to view your profile.</h1>
+    )
 }
 
 export default Profile

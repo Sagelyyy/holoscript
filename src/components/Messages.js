@@ -34,10 +34,18 @@ const Messages = () => {
     })
 
 
+    if (authUser) {
+        return (
+            <div className='message--content--container'>
+                <h1>Messages</h1>
+                {messages?.length > 0 ? messageElements : <h3>You have no messages.</h3>}
+            </div>
+        )
+    }
+
     return (
         <div className='message--content--container'>
-        <h1>Messages</h1>
-        {messages?.length > 0 ? messageElements : <h3>You have no messages.</h3>}
+            <h1>Please Log In to view messages</h1>
         </div>
     )
 }

@@ -16,17 +16,17 @@ function App() {
             home
           </span> Home</Link>
           {authUser &&
-          <div className='nav--links--loggedIn--container'>
-          <Link className="nav--link" to="/profile"><span className="material-icons">
-            person
-          </span> profile</Link>
-          <Link className="nav--link" to="/messages"><span className="material-icons">
-            chat
-          </span> messages</Link>
-          <Link className="nav--link" to="/notifications"><span className="material-icons">
-            notifications
-          </span> notifications</Link> 
-          </div>
+            <div className='nav--links--loggedIn--container'>
+              <Link className="nav--link" to="/profile"><span className="material-icons">
+                person
+              </span> profile</Link>
+              <Link className="nav--link" to="/messages"><span className="material-icons">
+                chat
+              </span> messages</Link>
+              <Link className="nav--link" to="/notifications"><span className="material-icons">
+                notifications
+              </span> notifications</Link>
+            </div>
           }
         </div>
         <div className='account--container'>

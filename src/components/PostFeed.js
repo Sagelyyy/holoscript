@@ -1,9 +1,10 @@
 import './PostFeed.css'
 import { useUserAuth } from '../contexts/UserAuthContext'
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { getDoc, doc, onSnapshot, updateDoc, query, collection, getDocs, arrayUnion, increment, arrayRemove, } from 'firebase/firestore'
 import { db } from '../firebase'
 import MessageModal from './MessageModal'
+import { Link } from 'react-router-dom'
 
 const PostFeed = () => {
 
@@ -98,7 +99,11 @@ const PostFeed = () => {
                         <img className="postFeed--user--avatar" src={item.user_profile_image} />
                         <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
                     </div>
-                    <h4 className='postFeed--content'>{item.post}</h4>
+                    <Link to={'post/' + item.id}>
+                        <div>
+                            <h4 className='postFeed--content'>{item.post}</h4>
+                        </div>
+                        </Link>
                     <div className='postFeed--buttons'>
                         <span onClick={() => handleLike(item.id)} className="material-icons postButton liked">
                             favorite{item.likes > 0 ? <span className='postFeed--likes liked'>{item.likes}</span> : null}</span>
