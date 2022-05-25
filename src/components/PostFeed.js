@@ -118,7 +118,11 @@ const PostFeed = () => {
                         <img className="postFeed--user--avatar" src={item.user_profile_image} />
                         <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
                     </div>
-                    <h4 className='postFeed--content'>{item.post}</h4>
+                    <Link to={'post/' + item.id}>
+                        <div>
+                            <h4 className='postFeed--content'>{item.post}</h4>
+                        </div>
+                        </Link>
                     <div className='postFeed--buttons'>
                         <span onClick={() => handleLike(item.id)} className="material-icons postButton">
                             favorite{item.likes > 0 ? <span className='postFeed--likes'>{item.likes}</span> : null}</span>
