@@ -5,6 +5,7 @@ import { getDoc, doc, onSnapshot, updateDoc, query, collection, getDocs, arrayUn
 import { db } from '../firebase'
 import MessageModal from './MessageModal'
 import { Link } from 'react-router-dom'
+import ReplyModal from './ReplyModal'
 
 const PostFeed = () => {
 
@@ -14,6 +15,7 @@ const PostFeed = () => {
     const [allUsers, setAllUsers] = useState()
     const [showMessageModal, setShowMessageModal] = useState()
     const [messageSelection, setMessageSelection] = useState()
+    const [showReplyModal, setShowReplyModal] = useState(false)
 
     useEffect(() => {
         if (authUser?.uid != null) {
@@ -91,6 +93,10 @@ const PostFeed = () => {
         })
     }
 
+    const handleReply = () => {
+        setShowReplyModal(true)
+    }
+
     const postElements = postData?.map((item, i) => {
         if (item.liked_by.some(arrVal => user?.username === arrVal)) {
             return (
@@ -107,7 +113,7 @@ const PostFeed = () => {
                     <div className='postFeed--buttons'>
                         <span onClick={() => handleLike(item.id)} className="material-icons postButton liked">
                             favorite{item.likes > 0 ? <span className='postFeed--likes liked'>{item.likes}</span> : null}</span>
-                        <span className="material-icons postButton">forum</span>
+                        <span onClick={() => handleReply()} className="material-icons postButton">forum</span>
                     </div>
                 </div>
             )
@@ -126,7 +132,7 @@ const PostFeed = () => {
                     <div className='postFeed--buttons'>
                         <span onClick={() => handleLike(item.id)} className="material-icons postButton">
                             favorite{item.likes > 0 ? <span className='postFeed--likes'>{item.likes}</span> : null}</span>
-                        <span className="material-icons postButton">forum</span>
+                        <span onClick={() => handleReply()} className="material-icons postButton">forum</span>
                     </div>
                 </div>
             )
@@ -139,6 +145,7 @@ const PostFeed = () => {
             <div className='postFeed--content--container'>
                 {showMessageModal ? <MessageModal messageSelection={messageSelection} /> : null}
                 {postElements}
+                {showReplyModal ? <ReplyModal /> : null}
             </div>
 
         )

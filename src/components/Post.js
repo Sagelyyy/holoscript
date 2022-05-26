@@ -53,9 +53,10 @@ const Post = () => {
                 user: user.username,
                 id: nanoid(),
                 user_profile_image: user?.profile_image,
-                replies: [],
                 likes: 0,
-                liked_by: []
+                liked_by: [],
+                in_reply_to: null,
+                media: []
             })
         })
         e.preventDefault()

@@ -19,7 +19,18 @@ const ViewPost = () => {
     useEffect(() => {
         if (authUser?.uid != null) {
             getUserData()
-            getPostData(id)
+            // getPostData(id)
+            const q = query(collection(db, "allScripts"), where("id", "==", id));
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                const post = [];
+                querySnapshot.forEach((doc) => {
+                    post.push(doc.data());
+                });
+                post.sort((a, b) => a.time - b.time).reverse()
+                setPostData([...post])
+    
+            });
+            return unsubscribe
         }
         setUser()
     }, [authUser])
@@ -86,7 +97,7 @@ const ViewPost = () => {
         const q = query(collection(db, "allScripts"), where("id", "==", id));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-           data.push(doc.data())
+            data.push(doc.data())
         });
         setPostData([...data])
     }
@@ -103,7 +114,7 @@ const ViewPost = () => {
                         <div>
                             <h4 className='postFeed--content'>{item.post}</h4>
                         </div>
-                        </Link>
+                    </Link>
                     <div className='postFeed--buttons'>
                         <span onClick={() => handleLike(item.id)} className="material-icons postButton liked">
                             favorite{item.likes > 0 ? <span className='postFeed--likes liked'>{item.likes}</span> : null}</span>
@@ -122,7 +133,7 @@ const ViewPost = () => {
                         <div>
                             <h4 className='postFeed--content'>{item.post}</h4>
                         </div>
-                        </Link>
+                    </Link>
                     <div className='postFeed--buttons'>
                         <span onClick={() => handleLike(item.id)} className="material-icons postButton">
                             favorite{item.likes > 0 ? <span className='postFeed--likes'>{item.likes}</span> : null}</span>
@@ -133,9 +144,16 @@ const ViewPost = () => {
         }
     })
 
+    const replyElements = postData?.replies?.map((item, i) => {
+        return(
+            <h1>{item.post}</h1>
+        )
+    })
+
     return (
         <div>
             {postElements}
+            {replyElements}
         </div>
     )
 }
