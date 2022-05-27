@@ -16,6 +16,7 @@ const PostFeed = () => {
     const [showMessageModal, setShowMessageModal] = useState()
     const [messageSelection, setMessageSelection] = useState()
     const [showReplyModal, setShowReplyModal] = useState(false)
+    const [postId, setPostId] = useState()
 
     useEffect(() => {
         if (authUser?.uid != null) {
@@ -93,8 +94,9 @@ const PostFeed = () => {
         })
     }
 
-    const handleReply = () => {
+    const handleReply = (id) => {
         setShowReplyModal(true)
+        setPostId(id)
     }
 
     const postElements = postData?.map((item, i) => {
@@ -113,7 +115,7 @@ const PostFeed = () => {
                     <div className='postFeed--buttons'>
                         <span onClick={() => handleLike(item.id)} className="material-icons postButton liked">
                             favorite{item.likes > 0 ? <span className='postFeed--likes liked'>{item.likes}</span> : null}</span>
-                        <span onClick={() => handleReply()} className="material-icons postButton">forum</span>
+                        <span onClick={() => handleReply(item.id)} className="material-icons postButton">forum</span>
                     </div>
                 </div>
             )
@@ -132,7 +134,7 @@ const PostFeed = () => {
                     <div className='postFeed--buttons'>
                         <span onClick={() => handleLike(item.id)} className="material-icons postButton">
                             favorite{item.likes > 0 ? <span className='postFeed--likes'>{item.likes}</span> : null}</span>
-                        <span onClick={() => handleReply()} className="material-icons postButton">forum</span>
+                        <span onClick={() => handleReply(item.id)} className="material-icons postButton">forum</span>
                     </div>
                 </div>
             )
@@ -145,7 +147,7 @@ const PostFeed = () => {
             <div className='postFeed--content--container'>
                 {showMessageModal ? <MessageModal messageSelection={messageSelection} /> : null}
                 {postElements}
-                {showReplyModal ? <ReplyModal /> : null}
+                {showReplyModal ? <ReplyModal postId={postId}/> : null}
             </div>
 
         )

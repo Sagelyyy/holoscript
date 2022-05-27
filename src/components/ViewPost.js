@@ -10,16 +10,18 @@ const ViewPost = () => {
     const { authUser } = useUserAuth()
     const { id } = useParams()
     const [postData, setPostData] = useState([])
+    const [replyData, setReplyData] = useState([])
     const [user, setUser] = useState()
     const [messageSelection, setMessageSelection] = useState()
     const [showMessageModal, setShowMessageModal] = useState()
 
     console.log(postData)
+    console.log(replyData)
 
     useEffect(() => {
         if (authUser?.uid != null) {
             getUserData()
-            // getPostData(id)
+            getReplyData(id)
             const q = query(collection(db, "allScripts"), where("id", "==", id));
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
                 const post = [];
@@ -44,15 +46,16 @@ const ViewPost = () => {
         return arr.some(arrVal => user.username.toLowerCase() === arrVal)
     }
 
-    const handleLike = async (postId) => {
+    const handleLike = async (postId, col) => {
+        //if post or if reply here
         postData.map(async (item, i) => {
             if (item.id === postId) {
                 if (!didUserLike(item.liked_by, user)) {
-                    const q = query(collection(db, 'allScripts'))
+                    const q = query(collection(db, col))
                     const querySnapshot = await getDocs(q)
                     querySnapshot.forEach((scr) => {
                         if (scr.data().id === postId) {
-                            const postsRef = doc(db, 'allScripts', scr.id)
+                            const postsRef = doc(db, col, scr.id)
                             updateDoc(postsRef, {
                                 likes: increment(1)
                             })
@@ -62,11 +65,11 @@ const ViewPost = () => {
                         }
                     })
                 } else {
-                    const q = query(collection(db, 'allScripts'))
+                    const q = query(collection(db, col))
                     const querySnapshot = await getDocs(q)
                     querySnapshot.forEach((scr) => {
                         if (scr.data().id === postId) {
-                            const postsRef = doc(db, 'allScripts', scr.id)
+                            const postsRef = doc(db, col, scr.id)
                             updateDoc(postsRef, {
                                 likes: increment(-1)
                             })
@@ -92,14 +95,14 @@ const ViewPost = () => {
         }
     }
 
-    const getPostData = async (id) => {
+    const getReplyData = async (id) => {
         const data = []
-        const q = query(collection(db, "allScripts"), where("id", "==", id));
+        const q = query(collection(db, "replies"), where("in_reply_to", "==", id));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             data.push(doc.data())
         });
-        setPostData([...data])
+        setReplyData([...data])
     }
 
     const postElements = postData?.map((item, i) => {
@@ -110,13 +113,11 @@ const ViewPost = () => {
                         <img className="postFeed--user--avatar" src={item.user_profile_image} />
                         <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
                     </div>
-                    <Link to={'post/' + item.id}>
                         <div>
                             <h4 className='postFeed--content'>{item.post}</h4>
                         </div>
-                    </Link>
                     <div className='postFeed--buttons'>
-                        <span onClick={() => handleLike(item.id)} className="material-icons postButton liked">
+                        <span onClick={() => handleLike(item.id, 'allScripts')} className="material-icons postButton liked">
                             favorite{item.likes > 0 ? <span className='postFeed--likes liked'>{item.likes}</span> : null}</span>
                         <span className="material-icons postButton">forum</span>
                     </div>
@@ -129,13 +130,11 @@ const ViewPost = () => {
                         <img className="postFeed--user--avatar" src={item.user_profile_image} />
                         <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
                     </div>
-                    <Link to={'post/' + item.id}>
                         <div>
                             <h4 className='postFeed--content'>{item.post}</h4>
                         </div>
-                    </Link>
                     <div className='postFeed--buttons'>
-                        <span onClick={() => handleLike(item.id)} className="material-icons postButton">
+                        <span onClick={() => handleLike(item.id, 'allScripts')} className="material-icons postButton">
                             favorite{item.likes > 0 ? <span className='postFeed--likes'>{item.likes}</span> : null}</span>
                         <span className="material-icons postButton">forum</span>
                     </div>
@@ -144,10 +143,42 @@ const ViewPost = () => {
         }
     })
 
-    const replyElements = postData?.replies?.map((item, i) => {
-        return(
-            <h1>{item.post}</h1>
-        )
+    const replyElements = replyData?.map((item, i) => {
+        if (item.liked_by.some(arrVal => user?.username === arrVal)) {
+            return (
+                <div key={i} className='postFeed--container'>
+                    <div className='postFeed--user--container'>
+                        <img className="postFeed--user--avatar" src={item.user_profile_image} />
+                        <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
+                    </div>
+                        <div>
+                            <h4 className='postFeed--content'>{item.reply}</h4>
+                        </div>
+                    <div className='postFeed--buttons'>
+                        <span onClick={() => handleLike(item.id, 'replies')} className="material-icons postButton liked">
+                            favorite{item.likes > 0 ? <span className='postFeed--likes liked'>{item.likes}</span> : null}</span>
+                        <span className="material-icons postButton">forum</span>
+                    </div>
+                </div>
+            )
+        } else {
+            return (
+                <div key={i} className='postFeed--container'>
+                    <div className='postFeed--user--container'>
+                        <img className="postFeed--user--avatar" src={item.user_profile_image} />
+                        <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
+                    </div>
+                        <div>
+                            <h4 className='postFeed--content'>{item.reply}</h4>
+                        </div>
+                    <div className='postFeed--buttons'>
+                        <span onClick={() => handleLike(item.id,'replies')} className="material-icons postButton">
+                            favorite{item.likes > 0 ? <span className='postFeed--likes'>{item.likes}</span> : null}</span>
+                        <span className="material-icons postButton">forum</span>
+                    </div>
+                </div>
+            )
+        }
     })
 
     return (
