@@ -138,6 +138,7 @@ const Profile = () => {
     }
 
     const setupElements = () => {
+        //we need to rework this..posts seems the wrong way to do it, maybe match all scripts with user.
         if (user?.posts) {
             const scriptElements = user?.posts.map((item, i) => {
                 return (
