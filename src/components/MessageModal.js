@@ -42,9 +42,9 @@ const MessageModal = (props) => {
 
     useEffect(() => {
         if (submitted && message.sent_by) {
-            console.log('ue firing')
             writeMessageData(message, recipientUser)
             setSubmitted(false)
+            props.setShowMessageModal(false)
         }
     }, [message])
 

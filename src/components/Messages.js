@@ -28,7 +28,6 @@ const Messages = () => {
                     <h3 className='messages--user--username'>{message.sent_by}</h3>
                 </div>
                 <h4 className='messages--content'>{message.post}</h4>
-                <p>TODO: ADD BUTTONS!</p>
             </div>
         )
     })

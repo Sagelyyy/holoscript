@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useUserAuth } from '../contexts/UserAuthContext'
-import { doc, getDoc, updateDoc, arrayUnion, setDoc, addDoc, collection } from "firebase/firestore";
+import { doc, getDoc, updateDoc, arrayUnion, setDoc, addDoc, collection, getDocs, query, increment } from "firebase/firestore";
 import { db } from "../firebase";
 import { nanoid } from 'nanoid';
 import './ReplyModal.css'
@@ -32,6 +32,7 @@ const ReplyModal = (props) => {
                     post: ''
                 })
             })
+        props.setShowReplyModal(false)
         }
     }, [post])
     
@@ -51,8 +52,17 @@ const ReplyModal = (props) => {
     const writePostData = async (post) => {
         const userDocRef = doc(db, 'users', authUser.uid)
         await updateDoc(userDocRef, { "replies": arrayUnion(post) })
-        const scriptsRef = doc(db, 'allScripts', 'scriptdata')
         await addDoc(collection(db, 'replies'), post)
+        const q = query(collection(db, 'allScripts'))
+                    const querySnapshot = await getDocs(q)
+                    querySnapshot.forEach((scr) => {
+                        if (scr.data().id === props.postId) {
+                            const postsRef = doc(db, 'allScripts', scr.id)
+                            updateDoc(postsRef, {
+                                replies: increment(1)
+                            })
+                        }
+                    })
     }
 
     const handleChange = (e) => {

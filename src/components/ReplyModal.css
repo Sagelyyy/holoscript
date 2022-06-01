@@ -1,16 +1,16 @@
 .ReplyModal--container{
-    position: fixed;
+    position:absolute;
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
     padding: 2rem;
+    top: 10rem;
     width: 30rem;
     height: 10rem;
     background-color: grey;
     border: 2px solid black;
     margin-left: 3rem;
-    margin-top: 10rem;
     gap: 0.5rem;
     z-index: 2;
 }

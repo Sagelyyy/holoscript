@@ -111,11 +111,12 @@ const PostFeed = () => {
                         <div>
                             <h4 className='postFeed--content'>{item.post}</h4>
                         </div>
-                        </Link>
+                    </Link>
                     <div className='postFeed--buttons'>
                         <span onClick={() => handleLike(item.id)} className="material-icons postButton liked">
                             favorite{item.likes > 0 ? <span className='postFeed--likes liked'>{item.likes}</span> : null}</span>
-                        <span onClick={() => handleReply(item.id)} className="material-icons postButton">forum</span>
+                        <span onClick={() => handleReply(item.id)} className="material-icons postButton">
+                            forum{item.replies > 0 ? <span className='postFeed--replies'>{item.replies}</span> : null}</span>
                     </div>
                 </div>
             )
@@ -130,11 +131,12 @@ const PostFeed = () => {
                         <div>
                             <h4 className='postFeed--content'>{item.post}</h4>
                         </div>
-                        </Link>
+                    </Link>
                     <div className='postFeed--buttons'>
                         <span onClick={() => handleLike(item.id)} className="material-icons postButton">
                             favorite{item.likes > 0 ? <span className='postFeed--likes'>{item.likes}</span> : null}</span>
-                        <span onClick={() => handleReply(item.id)} className="material-icons postButton">forum</span>
+                        <span onClick={() => handleReply(item.id)} className="material-icons postButton">
+                            forum{item.replies > 0 ? <span className='postFeed--replies'>{item.replies}</span> : null}</span>
                     </div>
                 </div>
             )
@@ -145,9 +147,9 @@ const PostFeed = () => {
     if (user) {
         return (
             <div className='postFeed--content--container'>
-                {showMessageModal ? <MessageModal messageSelection={messageSelection} /> : null}
+                {showMessageModal ? <MessageModal setShowMessageModal={setShowMessageModal} messageSelection={messageSelection} /> : null}
                 {postElements}
-                {showReplyModal ? <ReplyModal postId={postId}/> : null}
+                {showReplyModal ? <ReplyModal setShowReplyModal={setShowReplyModal} postId={postId} /> : null}
             </div>
 
         )
