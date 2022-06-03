@@ -4,6 +4,7 @@ import { doc, getDoc, updateDoc, arrayUnion, setDoc, addDoc, collection } from "
 import { db } from "../firebase";
 import './Post.css'
 import { nanoid } from 'nanoid';
+import { parseMedia } from '../utils/media';
 
 const Post = () => {
 
@@ -46,27 +47,7 @@ const Post = () => {
         })
     }
 
-    const parseMedia = (post) => {
-
-        // for some reason when we push the array to firestore it puts the whole
-        // array as the first element in firestore.
-
-        console.log(post)
-        const regex = /(https?:\/\/[^ ]*\.(?:gif|png|jpg|jpeg))/ig
-        const arr = [...post.matchAll(regex)]
-        const media = []
-        for (const item of arr) {
-            media.push(item[0])
-        }
-        console.log(media[0].split('/n'))
-        return media
-    }
-
     const handleSubmit = async (e) => {
-
-        // for some reason when we push the array to firestore it puts the whole
-        // array as the first element in firestore.
-
         setPost((old) => {
             return ({
                 ...old,

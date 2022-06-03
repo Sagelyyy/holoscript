@@ -74,7 +74,7 @@
 }
 
 .userScripts--content{
-    text-align: center;
+    text-align: left;
     align-self: center;
     padding: 3rem;
     width: 100%;
@@ -83,4 +83,15 @@
 .userScripts--content:hover{
     cursor: pointer;
     background-color: rgba(231, 233, 234, 0.1);
+}
+
+.userScripts--media--container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.userScripts--media{
+    max-width: 300px;
+    margin-left: 1rem;
 }

@@ -10,7 +10,7 @@ const Home = () => {
 
     const { authUser } = useUserAuth()
     const [newUser, setNewUser] = useState(false)
-    const [showModal, setShowModal] = useState(true)
+    const [showModal, setShowModal] = useState(false)
 
     useEffect(() => {
         if (authUser != null) {

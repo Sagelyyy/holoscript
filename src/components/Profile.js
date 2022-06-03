@@ -5,6 +5,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL, listAll } from "firebase/storage";
 import newUser from '../images/newUser.jpg'
+import { parseMedia } from '../utils/media';
 
 const Profile = () => {
 
@@ -148,6 +149,15 @@ const Profile = () => {
                             <h3 className='userScripts--user'>{item.user}</h3>
                         </div>
                         <h4 className='userScripts--content'>{item.post}</h4>
+                        <div className='userScripts--media--container'>
+                                {item.media && item.media.map((image, j) => {
+                                    return (
+                                        <div key={j}>
+                                            <img className='userScripts--media' src={image} />
+                                        </div>
+                                    )
+                                })}
+                            </div>
                     </div>
                 )
             }).reverse()
