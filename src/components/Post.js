@@ -9,7 +9,7 @@ const Post = () => {
 
     const { authUser } = useUserAuth()
     const [post, setPost] = useState({
-        post:''
+        post: ''
     })
     const [user, setUser] = useState()
     const [submitted, setSubmitted] = useState(false)
@@ -17,17 +17,18 @@ const Post = () => {
     useEffect(() => {
         if (authUser?.uid != null) {
             getUserData()
-        }else{
+        } else {
             // other stuff
         }
     }, [authUser])
 
     useEffect(() => {
-        if(submitted && post.user){
+        if (submitted && post.user) {
+            console.log('fired')
             writePostData(post)
             setSubmitted(false)
             setPost((old) => {
-                return({
+                return ({
                     ...old,
                     post: ''
                 })
@@ -36,7 +37,7 @@ const Post = () => {
     }, [post])
 
     const handleChange = (e) => {
-        const {name, value} = e.target
+        const { name, value } = e.target
         setPost(old => {
             return ({
                 ...old,
@@ -45,9 +46,29 @@ const Post = () => {
         })
     }
 
+    const parseMedia = (post) => {
+
+        // for some reason when we push the array to firestore it puts the whole
+        // array as the first element in firestore.
+
+        console.log(post)
+        const regex = /(https?:\/\/[^ ]*\.(?:gif|png|jpg|jpeg))/ig
+        const arr = [...post.matchAll(regex)]
+        const media = []
+        for (const item of arr) {
+            media.push(item[0])
+        }
+        console.log(media)
+        return media
+    }
+
     const handleSubmit = async (e) => {
+
+        // for some reason when we push the array to firestore it puts the whole
+        // array as the first element in firestore.
+
         setPost((old) => {
-            return({
+            return ({
                 ...old,
                 time: Date.now(),
                 user: user.username,
@@ -56,7 +77,8 @@ const Post = () => {
                 likes: 0,
                 liked_by: [],
                 in_reply_to: null,
-                media: []
+                replies: 0,
+                media: parseMedia(post.post)
             })
         })
         e.preventDefault()
@@ -84,7 +106,7 @@ const Post = () => {
         }
     }
 
-    
+
 
     return (
         <div className="post--container">

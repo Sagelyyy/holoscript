@@ -110,6 +110,13 @@ const PostFeed = () => {
                     <Link to={'post/' + item.id}>
                         <div>
                             <h4 className='postFeed--content'>{item.post}</h4>
+                            {item.media && item.media.map((image, j) => {
+                                return (
+                                    <div key={j}>
+                                        <img className='postFeed--media' src={image} />
+                                    </div>
+                                )
+                            })}
                         </div>
                     </Link>
                     <div className='postFeed--buttons'>
@@ -130,6 +137,13 @@ const PostFeed = () => {
                     <Link to={'post/' + item.id}>
                         <div>
                             <h4 className='postFeed--content'>{item.post}</h4>
+                            {item.media && item.media.map((image, j) => {
+                                return (
+                                    <div key={j}>
+                                        <img className='postFeed--media' src={image} />
+                                    </div>
+                                )
+                            })}
                         </div>
                     </Link>
                     <div className='postFeed--buttons'>
