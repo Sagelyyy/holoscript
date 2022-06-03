@@ -21,7 +21,7 @@ a:visited{ color: white;}
 }
 
 .replyFeed--content{
-    text-align: center;
+    text-align: left;
     align-self: center;
     padding: 3rem;
     width: 100%;

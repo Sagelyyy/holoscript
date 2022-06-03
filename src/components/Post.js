@@ -58,7 +58,7 @@ const Post = () => {
         for (const item of arr) {
             media.push(item[0])
         }
-        console.log(media)
+        console.log(media[0].split('/n'))
         return media
     }
 
