@@ -12,6 +12,7 @@ function App() {
     <div className='app--container'>
       <nav className='app--menu'>
         <div className='nav--links--container'>
+          <h1 className='app--title'>Holoscript.</h1>
           <Link className="nav--link" to="/"><span className="material-icons">
             home
           </span> Home</Link>

@@ -21,6 +21,8 @@
     padding: 1rem;
     width: 95%;
     overflow-wrap: break-word;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
 }
 
 .messages--content:hover{

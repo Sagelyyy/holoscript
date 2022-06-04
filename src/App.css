@@ -33,7 +33,6 @@
 .nav--links--container{
   margin-top: 15rem;
   text-transform: capitalize;
-  gap: 10px;
   display: flex;
   flex-direction: column;
   margin-left: 20rem;
@@ -51,6 +50,7 @@ nav a, nav a:visited{
   color: white;
   text-align: left;
   font-size: 40px;
+  font-family: 'Roboto', sans-serif;
 }
 
 nav a:hover{text-decoration: underline; border-radius: 20px; width: fit-content;}
@@ -85,4 +85,14 @@ nav a:hover{text-decoration: underline; border-radius: 20px; width: fit-content;
   align-self: flex-end;
   height: 40vh;
   justify-content: flex-end;
+}
+
+
+.app--title{
+  position: absolute;
+  margin-left: 0;
+  top: 6%;
+  left: 6%;
+  font-size: 100px;
+  font-family: 'Roboto', sans-serif;
 }

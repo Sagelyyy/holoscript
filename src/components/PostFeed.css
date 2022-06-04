@@ -35,6 +35,8 @@ a:visited{ color: white;}
 
 .postFeed--post{
     padding-bottom: 1rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
 }
 
 .postFeed--user--container{
@@ -46,6 +48,8 @@ a:visited{ color: white;}
 .postFeed--user--username{
     text-transform: capitalize;
     margin-top: 1.5rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
 }
 
 .postFeed--user--username:hover{

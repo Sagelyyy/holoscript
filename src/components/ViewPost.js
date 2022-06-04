@@ -124,7 +124,7 @@ const ViewPost = () => {
                         <h3 onClick={() => handleMessage(item.user)} className='replyFeed--user--username'>{item.user}</h3>
                     </div>
                     <div className='replyFeed--content'>
-                        <h4>{item.post}</h4>
+                        <h4 className='replyFeed--post'>{item.post}</h4>
 
                         <div className='replyFeed--media--container'>
                             {item.media && item.media.map((image, j) => {
@@ -152,7 +152,7 @@ const ViewPost = () => {
                         <h3 onClick={() => handleMessage(item.user)} className='replyFeed--user--username'>{item.user}</h3>
                     </div>
                     <div className='replyFeed--content'>
-                        <h4>{item.post}</h4>
+                        <h4 className='replyFeed--post'>{item.post}</h4>
 
                         <div className='replyFeed--media--container'>
                             {item.media && item.media.map((image, j) => {
@@ -176,7 +176,6 @@ const ViewPost = () => {
     })
 
     const replyElements = replyData?.map((item, i) => {
-        // I wonder whats happening in the links ???
         if (item.liked_by.some(arrVal => user?.username.toLowerCase() === arrVal)) {
             return (
                 <div key={i} className='replyFeed--container'>
