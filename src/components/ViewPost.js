@@ -5,6 +5,7 @@ import { getDoc, doc, onSnapshot, updateDoc, query, collection, getDocs, arrayUn
 import { db } from "../firebase";
 import { useState, useEffect } from "react";
 import { useUserAuth } from "../contexts/UserAuthContext";
+import { didUserLike } from '../utils/user';
 import ReplyModal from "./ReplyModal";
 import MessageModal from './MessageModal';
 
@@ -66,10 +67,6 @@ const ViewPost = () => {
         setShowMessageModal((old) => !old)
     }
 
-    const didUserLike = (arr, user) => {
-        return arr.some(arrVal => user.username.toLowerCase() === arrVal)
-    }
-
     const handleLike = async (postId, col, arr) => {
         arr.map(async (item, i) => {
             if (item.id === postId) {
@@ -119,21 +116,31 @@ const ViewPost = () => {
     }
 
     const postElements = postData?.map((item, i) => {
-        if (item.liked_by.some(arrVal => user?.username === arrVal)) {
+        if (item.liked_by.some(arrVal => user?.username.toLowerCase() === arrVal)) {
             return (
                 <div key={i} className='replyFeed--container'>
                     <div className='replyFeed--user--container'>
                         <img className="replyFeed--user--avatar" src={item.user_profile_image} />
                         <h3 onClick={() => handleMessage(item.user)} className='replyFeed--user--username'>{item.user}</h3>
                     </div>
-                    <div>
-                        <h4 className='replyFeed--content'>{item.post}</h4>
+                    <div className='replyFeed--content'>
+                        <h4>{item.post}</h4>
+
+                        <div className='replyFeed--media--container'>
+                            {item.media && item.media.map((image, j) => {
+                                return (
+                                    <div key={j}>
+                                        <img className='replyFeed--media' src={image} />
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
                     <div className='replyFeed--buttons'>
                         <span onClick={() => handleLike(item.id, 'allScripts', postData)} className="material-icons postButton liked">
                             favorite{item.likes > 0 ? <span className='replyFeed--likes liked'>{item.likes}</span> : null}</span>
                         <span onClick={() => handleReply(item.id)} className="material-icons postButton">
-                            forum{item.replies > 0 ? <span className='postFeed--replies'>{item.replies}</span> : null}</span>
+                            forum{item.replies > 0 ? <span className='replyFeed--replies'>{item.replies}</span> : null}</span>
                     </div>
                 </div>
             )
@@ -144,14 +151,24 @@ const ViewPost = () => {
                         <img className="replyFeed--user--avatar" src={item.user_profile_image} />
                         <h3 onClick={() => handleMessage(item.user)} className='replyFeed--user--username'>{item.user}</h3>
                     </div>
-                    <div>
-                        <h4 className='replyFeed--content'>{item.post}</h4>
+                    <div className='replyFeed--content'>
+                        <h4>{item.post}</h4>
+
+                        <div className='replyFeed--media--container'>
+                            {item.media && item.media.map((image, j) => {
+                                return (
+                                    <div key={j}>
+                                        <img className='replyFeed--media' src={image} />
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
                     <div className='replyFeed--buttons'>
                         <span onClick={() => handleLike(item.id, 'allScripts', postData)} className="material-icons postButton">
                             favorite{item.likes > 0 ? <span className='replyFeed--likes'>{item.likes}</span> : null}</span>
                         <span onClick={() => handleReply(item.id)} className="material-icons postButton">
-                            forum{item.replies > 0 ? <span className='postFeed--replies'>{item.replies}</span> : null}</span>
+                            forum{item.replies > 0 ? <span className='replyFeed--replies'>{item.replies}</span> : null}</span>
                     </div>
                 </div>
             )
@@ -160,7 +177,7 @@ const ViewPost = () => {
 
     const replyElements = replyData?.map((item, i) => {
         // I wonder whats happening in the links ???
-        if (item.liked_by.some(arrVal => user?.username === arrVal)) {
+        if (item.liked_by.some(arrVal => user?.username.toLowerCase() === arrVal)) {
             return (
                 <div key={i} className='replyFeed--container'>
                     <div className='replyFeed--user--container'>
@@ -172,6 +189,15 @@ const ViewPost = () => {
                             <h4 className='replyFeed--content'>{item.reply}</h4>
                         </div>
                     </Link>
+                    <div className='replyFeed--media--container'>
+                        {item.media && item.media.map((image, j) => {
+                            return (
+                                <div key={j}>
+                                    <img className='replyFeed--media' src={image} />
+                                </div>
+                            )
+                        })}
+                    </div>
                     <div className='replyFeed--buttons'>
                         <span onClick={() => handleLike(item.id, 'replies', replyData)} className="material-icons postButton liked">
                             favorite{item.likes > 0 ? <span className='replyFeed--likes liked'>{item.likes}</span> : null}</span>
@@ -190,6 +216,15 @@ const ViewPost = () => {
                             <h4 className='replyFeed--content'>{item.reply}</h4>
                         </div>
                     </Link>
+                    <div className='replyFeed--media--container'>
+                        {item.media && item.media.map((image, j) => {
+                            return (
+                                <div key={j}>
+                                    <img className='replyFeed--media' src={image} />
+                                </div>
+                            )
+                        })}
+                    </div>
                     <div className='replyFeed--buttons'>
                         <span onClick={() => handleLike(item.id, 'replies', replyData)} className="material-icons postButton">
                             favorite{item.likes > 0 ? <span className='replyFeed--likes'>{item.likes}</span> : null}</span>

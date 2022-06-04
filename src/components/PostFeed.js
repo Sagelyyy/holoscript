@@ -1,8 +1,9 @@
 import './PostFeed.css'
 import { useUserAuth } from '../contexts/UserAuthContext'
-import { Fragment, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getDoc, doc, onSnapshot, updateDoc, query, collection, getDocs, arrayUnion, increment, arrayRemove, } from 'firebase/firestore'
 import { db } from '../firebase'
+import { didUserLike } from '../utils/user'
 import MessageModal from './MessageModal'
 import { Link } from 'react-router-dom'
 import ReplyModal from './ReplyModal'
@@ -54,10 +55,6 @@ const PostFeed = () => {
         setShowMessageModal((old) => !old)
     }
 
-    const didUserLike = (arr, user) => {
-        return arr.some(arrVal => user.username.toLowerCase() === arrVal)
-    }
-
     const handleLike = async (postId) => {
         postData.map(async (item, i) => {
             if (item.id === postId) {
@@ -100,7 +97,7 @@ const PostFeed = () => {
     }
 
     const postElements = postData?.map((item, i) => {
-        if (item.liked_by.some(arrVal => user?.username === arrVal)) {
+        if (item.liked_by.some(arrVal => user?.username.toLowerCase() === arrVal)) {
             return (
                 <div key={i} className='postFeed--container'>
                     <div className='postFeed--user--container'>
@@ -108,8 +105,8 @@ const PostFeed = () => {
                         <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
                     </div>
                     <Link to={'post/' + item.id}>
-                        <div>
-                            <h4 className='postFeed--content'>{item.post}</h4>
+                        <div className='postFeed--content'>
+                            <h4 className='postFeed--post'>{item.post}</h4>
                             <div className='postFeed--media--container'>
                                 {item.media && item.media.map((image, j) => {
                                     return (
@@ -137,8 +134,8 @@ const PostFeed = () => {
                         <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
                     </div>
                     <Link to={'post/' + item.id}>
-                        <div>
-                            <h4 className='postFeed--content'>{item.post}</h4>
+                        <div className='postFeed--content'>
+                            <h4>{item.post}</h4>
                             <div className='postFeed--media--container'>
                                 {item.media && item.media.map((image, j) => {
                                     return (

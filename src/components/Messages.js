@@ -28,7 +28,17 @@ const Messages = () => {
                     <h3 className='messages--user--username'>{message.sent_by}</h3>
                 </div>
                 <h4 className='messages--content'>{message.post}</h4>
+                <div className='messages--media--container'>
+                        {message.media && message.media.map((image, j) => {
+                            return (
+                                <div key={j}>
+                                    <img className='messages--media' src={image} />
+                                </div>
+                            )
+                        })}
+                    </div>
             </div>
+            
         )
     })
 

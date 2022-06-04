@@ -23,13 +23,25 @@ a:visited{ color: white;}
 .replyFeed--content{
     text-align: left;
     align-self: center;
-    padding: 3rem;
-    width: 100%;
+    padding: 1rem;
+    width: 95%;
+    overflow-wrap: break-word;
 }
 
 .replyFeed--content:hover{
     cursor: pointer;
     background-color: rgba(231, 233, 234, 0.1);
+}
+
+.replyFeed--media--container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.replyFeed--media{
+    max-width: 300px;
+    margin-left: 1rem;
 }
 
 .replyFeed--user--container{

@@ -23,13 +23,18 @@ a:visited{ color: white;}
 .postFeed--content{
     text-align: left;
     align-self: center;
-    padding: 3rem;
-    width: 100%;
+    padding: 1rem;
+    width: 95%;
+    overflow-wrap: break-word;
 }
 
 .postFeed--content:hover{
     cursor: pointer;
     background-color: rgba(231, 233, 234, 0.1);
+}
+
+.postFeed--post{
+    padding-bottom: 1rem;
 }
 
 .postFeed--user--container{

@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid'
 import { useUserAuth } from '../contexts/UserAuthContext'
 import { query, collection, getDocs, arrayUnion, doc, updateDoc, getDoc } from 'firebase/firestore'
 import { db } from '../firebase'
+import { parseMedia } from '../utils/media'
 
 const MessageModal = (props) => {
     const { authUser } = useUserAuth()
@@ -94,7 +95,8 @@ const MessageModal = (props) => {
                 time: Date.now(),
                 sent_by: user.username,
                 id: nanoid(),
-                user_profile_image: user?.profile_image
+                user_profile_image: user?.profile_image,
+                media: parseMedia(message.post)
             })
         })
         e.preventDefault()

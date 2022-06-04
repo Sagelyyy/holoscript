@@ -3,6 +3,7 @@ import { useUserAuth } from '../contexts/UserAuthContext'
 import { doc, getDoc, updateDoc, arrayUnion, setDoc, addDoc, collection, getDocs, query, increment } from "firebase/firestore";
 import { db } from "../firebase";
 import { nanoid } from 'nanoid';
+import { parseMedia } from '../utils/media';
 import './ReplyModal.css'
 
 
@@ -86,7 +87,7 @@ const ReplyModal = (props) => {
                 likes: 0,
                 liked_by: [],
                 in_reply_to: props.postId,
-                media: []
+                media: parseMedia(post.reply)
             })
         })
         e.preventDefault()

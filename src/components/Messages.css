@@ -16,15 +16,27 @@
 }
 
 .messages--content{
-    text-align: center;
+    text-align: left;
     align-self: center;
-    padding: 3rem;
-    width: 100%;
+    padding: 1rem;
+    width: 95%;
+    overflow-wrap: break-word;
 }
 
 .messages--content:hover{
     cursor: pointer;
     background-color: rgba(231, 233, 234, 0.1);
+}
+
+.messages--media--container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.messages--media{
+    max-width: 300px;
+    margin-left: 1rem;
 }
 
 .messages--user--container{

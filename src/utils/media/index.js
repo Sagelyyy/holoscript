@@ -5,6 +5,8 @@ export const parseMedia = (post) => {
     for (const item of arr) {
         media.push(item[0])
     }
-    media[0].split('/n')
+    if (media.length > 0) {
+        media[0].split('/n')
+    }
     return media
 }
