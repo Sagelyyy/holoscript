@@ -2,6 +2,31 @@ a{text-decoration: none; color: white;}
 
 a:visited{ color: white;}
 
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 28px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+  
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+  
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+  
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+  }
+
 .postFeed--content--container{
     overflow-y: auto;
     overflow-x: hidden;
@@ -12,12 +37,17 @@ a:visited{ color: white;}
     display: none;
 }
 
-
 .postFeed--container{
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid grey;
     z-index: 1;
+}
+
+.follow{
+    align-self: flex-end;
+    padding: 1rem;
+    -webkit-user-select: none;
 }
 
 .postFeed--content{
@@ -62,6 +92,12 @@ a:visited{ color: white;}
     border-radius: 50%;
 }
 
+.postFeed--userIconName{
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+}
+
 .postFeed--media--container{
     display: flex;
     flex-direction: row;
@@ -82,11 +118,13 @@ a:visited{ color: white;}
 
 .postFeed--likes{
     font-size: 1rem;
+    -webkit-user-select: none;
 }
 
 .postButton{
     cursor: pointer;
     transition: transform .2s;
+    -webkit-user-select: none;
 }
 
 .postButton:hover{
@@ -95,5 +133,6 @@ a:visited{ color: white;}
 
 .liked{
     color: rgb(240, 49, 49);
+    -webkit-user-select: none;
 }
 

@@ -35,6 +35,8 @@
 .profile--username{
     text-transform: capitalize;
     margin-left: 4rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
 }
 
 .profile--content--container{
@@ -60,24 +62,35 @@
     gap: 1rem;
 }
 
+.userScripts--post{
+    padding-bottom: 1rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+
 .userScripts--avatar{
     width: 10%;
     border-radius: 50%;
 }
 
 .userScripts--user{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
     text-transform: capitalize;
 }
 
 .userScripts--title{
-    margin-bottom: 1rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    padding: 1rem;
 }
 
 .userScripts--content{
     text-align: left;
     align-self: center;
-    padding: 3rem;
-    width: 100%;
+    padding: 1rem;
+    width: 95%;
+    overflow-wrap: break-word;
 }
 
 .userScripts--content:hover{

@@ -55,6 +55,25 @@ const PostFeed = () => {
         setShowMessageModal((old) => !old)
     }
 
+    const handleFollow = async () => {
+        // Not working how I want it yet...seems to be
+        // increasing everyones follower count x.x
+        
+        const querySnapshot = await getDocs(collection(db, "users"));
+        querySnapshot.forEach((qs) => {
+            // doc.data() is never undefined for query doc snapshots
+            postData.map(item => {
+                console.log(qs.data().id === item.posted_by)
+                if(qs.data().id === item.posted_by){
+                    const userRef = doc(db, 'users', qs.id)
+                    updateDoc(userRef, {
+                        followers_count: increment(1)
+                    })
+                }
+            })
+        });
+    }
+
     const handleLike = async (postId) => {
         postData.map(async (item, i) => {
             if (item.id === postId) {
@@ -101,8 +120,13 @@ const PostFeed = () => {
             return (
                 <div key={i} className='postFeed--container'>
                     <div className='postFeed--user--container'>
-                        <img className="postFeed--user--avatar" src={item.user_profile_image} />
-                        <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
+                        <div className='postFeed--userIconName'>
+                            <img className="postFeed--user--avatar" src={item.user_profile_image} />
+                            <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
+                        </div>
+                        <span onClick={handleFollow} className="material-icons follow">
+                            person_add
+                        </span>
                     </div>
                     <Link to={'post/' + item.id}>
                         <div className='postFeed--content'>
@@ -130,12 +154,17 @@ const PostFeed = () => {
             return (
                 <div key={i} className='postFeed--container'>
                     <div className='postFeed--user--container'>
-                        <img className="postFeed--user--avatar" src={item.user_profile_image} />
-                        <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
+                        <div className='postFeed--userIconName'>
+                            <img className="postFeed--user--avatar" src={item.user_profile_image} />
+                            <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
+                        </div>
+                        <span onClick={handleFollow} className="material-icons follow">
+                            person_add
+                        </span>
                     </div>
                     <Link to={'post/' + item.id}>
                         <div className='postFeed--content'>
-                            <h4>{item.post}</h4>
+                            <h4 className='postFeed--post'>{item.post}</h4>
                             <div className='postFeed--media--container'>
                                 {item.media && item.media.map((image, j) => {
                                     return (

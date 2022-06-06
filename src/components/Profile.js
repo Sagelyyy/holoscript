@@ -5,7 +5,6 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL, listAll } from "firebase/storage";
 import newUser from '../images/newUser.jpg'
-import { parseMedia } from '../utils/media';
 
 const Profile = () => {
 
@@ -148,8 +147,9 @@ const Profile = () => {
                             <img className='userScripts--avatar' src={user?.profile_image} />
                             <h3 className='userScripts--user'>{item.user}</h3>
                         </div>
-                        <h4 className='userScripts--content'>{item.post}</h4>
-                        <div className='userScripts--media--container'>
+                        <div className='userScripts--content'>
+                            <h4 className='userScripts--post'>{item.post}</h4>
+                            <div className='userScripts--media--container'>
                                 {item.media && item.media.map((image, j) => {
                                     return (
                                         <div key={j}>
@@ -158,6 +158,7 @@ const Profile = () => {
                                     )
                                 })}
                             </div>
+                        </div>
                     </div>
                 )
             }).reverse()
@@ -178,6 +179,7 @@ const Profile = () => {
                     {user.profile_image ? <img onClick={showUploadModal} className='profile--image' src={user.profile_image} /> :
                         <img onClick={showUploadModal} className='profile--image' src={newUser} />}
                     <h1 className='profile--username'>{user.username}</h1>
+                    <h4 className='profile--followers'>Followers: {user.follower_count}</h4>
                 </div>
                 <div>
                     <h1 className='userScripts--title'>Your Scripts</h1>
@@ -187,7 +189,7 @@ const Profile = () => {
         )
     }
 
-    return(
+    return (
         <h1>Please Log in to view your profile.</h1>
     )
 }

@@ -51,6 +51,7 @@ const Post = () => {
         setPost((old) => {
             return ({
                 ...old,
+                posted_by: authUser.uid,
                 time: Date.now(),
                 user: user.username,
                 id: nanoid(),
