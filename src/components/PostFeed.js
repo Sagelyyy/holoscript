@@ -3,7 +3,7 @@ import { useUserAuth } from '../contexts/UserAuthContext'
 import { useEffect, useState } from 'react'
 import { getDoc, doc, onSnapshot, updateDoc, query, collection, getDocs, arrayUnion, increment, arrayRemove, } from 'firebase/firestore'
 import { db } from '../firebase'
-import { didUserLike } from '../utils/user'
+import { doesUserExist } from '../utils/user'
 import MessageModal from './MessageModal'
 import { Link } from 'react-router-dom'
 import ReplyModal from './ReplyModal'
@@ -55,29 +55,40 @@ const PostFeed = () => {
         setShowMessageModal((old) => !old)
     }
 
-    const handleFollow = async () => {
-        // Not working how I want it yet...seems to be
-        // increasing everyones follower count x.x
-        
-        const querySnapshot = await getDocs(collection(db, "users"));
-        querySnapshot.forEach((qs) => {
-            // doc.data() is never undefined for query doc snapshots
-            postData.map(item => {
-                console.log(qs.data().id === item.posted_by)
-                if(qs.data().id === item.posted_by){
-                    const userRef = doc(db, 'users', qs.id)
+    const handleFollow = async (userId) => {
+
+        // need to troubleshoot some function here.
+
+        const q = query(collection(db, 'users'))
+        const querySnapshot = await getDocs(q)
+        querySnapshot.forEach((snap) => {
+            if (snap.data().id === userId) {
+                if (!doesUserExist(snap.followed_by, user.username.toLowerCase())) {
+                    const userRef = doc(db, 'users', snap.data().id)
                     updateDoc(userRef, {
                         followers_count: increment(1)
                     })
+                    updateDoc(userRef, {
+                        followed_by: arrayUnion(user.username.toLowerCase())
+                    })
+                }else{
+                    const userRef = doc(db, 'users', snap.data().id)
+                    updateDoc(userRef, {
+                        followers_count: increment(-1)
+                    })
+                    updateDoc(userRef, {
+                        followed_by: arrayRemove(user.username.toLowerCase())
+                    })
                 }
-            })
-        });
+            }
+        })
+
     }
 
     const handleLike = async (postId) => {
         postData.map(async (item, i) => {
             if (item.id === postId) {
-                if (!didUserLike(item.liked_by, user)) {
+                if (!doesUserExist(item.liked_by, user)) {
                     const q = query(collection(db, 'allScripts'))
                     const querySnapshot = await getDocs(q)
                     querySnapshot.forEach((scr) => {
@@ -124,7 +135,7 @@ const PostFeed = () => {
                             <img className="postFeed--user--avatar" src={item.user_profile_image} />
                             <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
                         </div>
-                        <span onClick={handleFollow} className="material-icons follow">
+                        <span onClick={() => handleFollow(item.posted_by)} className="material-icons follow">
                             person_add
                         </span>
                     </div>
@@ -158,7 +169,7 @@ const PostFeed = () => {
                             <img className="postFeed--user--avatar" src={item.user_profile_image} />
                             <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
                         </div>
-                        <span onClick={handleFollow} className="material-icons follow">
+                        <span onClick={() => handleFollow(item.posted_by)} className="material-icons follow">
                             person_add
                         </span>
                     </div>

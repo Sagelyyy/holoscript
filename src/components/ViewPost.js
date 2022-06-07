@@ -5,7 +5,7 @@ import { getDoc, doc, onSnapshot, updateDoc, query, collection, getDocs, arrayUn
 import { db } from "../firebase";
 import { useState, useEffect } from "react";
 import { useUserAuth } from "../contexts/UserAuthContext";
-import { didUserLike } from '../utils/user';
+import { doesUserExist } from '../utils/user';
 import ReplyModal from "./ReplyModal";
 import MessageModal from './MessageModal';
 
@@ -70,7 +70,7 @@ const ViewPost = () => {
     const handleLike = async (postId, col, arr) => {
         arr.map(async (item, i) => {
             if (item.id === postId) {
-                if (!didUserLike(item.liked_by, user)) {
+                if (!doesUserExist(item.liked_by, user)) {
                     const q = query(collection(db, col))
                     const querySnapshot = await getDocs(q)
                     querySnapshot.forEach((scr) => {

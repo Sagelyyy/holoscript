@@ -179,7 +179,7 @@ const Profile = () => {
                     {user.profile_image ? <img onClick={showUploadModal} className='profile--image' src={user.profile_image} /> :
                         <img onClick={showUploadModal} className='profile--image' src={newUser} />}
                     <h1 className='profile--username'>{user.username}</h1>
-                    <h4 className='profile--followers'>Followers: {user.follower_count}</h4>
+                    <h4 className='profile--followers'>Followers: {user.followers_count}</h4>
                 </div>
                 <div>
                     <h1 className='userScripts--title'>Your Scripts</h1>
