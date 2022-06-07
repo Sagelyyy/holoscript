@@ -18,6 +18,7 @@ const PostFeed = () => {
     const [messageSelection, setMessageSelection] = useState()
     const [showReplyModal, setShowReplyModal] = useState(false)
     const [postId, setPostId] = useState()
+    const [postElem, setPostElem] = useState()
 
     useEffect(() => {
         if (authUser?.uid != null) {
@@ -36,6 +37,10 @@ const PostFeed = () => {
         setShowMessageModal(false)
         setUser()
     }, [authUser])
+
+    useEffect(() => {
+        console.log(user)
+    },[user])
 
 
     const getUserData = async () => {
@@ -57,8 +62,6 @@ const PostFeed = () => {
 
     const handleFollow = async (userId) => {
 
-        // This is still buggy. Sometimes it works..sometimes it does not?
-
         const currUser = user.username.toLowerCase()
 
         const currUserRef = doc(db, 'users', authUser.uid)
@@ -66,9 +69,9 @@ const PostFeed = () => {
         const q = query(collection(db, 'users'))
         const querySnapshot = await getDocs(q)
         querySnapshot.forEach((snap) => {
-            if (snap.data().id === userId) {
+            if (snap.id === userId) {
                 if (!doesUserExist(snap.data().followed_by, user)) {
-                    const userRef = doc(db, 'users', snap.data().id)
+                    const userRef = doc(db, 'users', snap.id)
                     updateDoc(userRef, {
                         followers_count: increment(1)
                     })
@@ -79,7 +82,7 @@ const PostFeed = () => {
                         following: arrayUnion(snap.data().username.toLowerCase())
                     })
                 } else {
-                    const userRef = doc(db, 'users', snap.data().id)
+                    const userRef = doc(db, 'users', snap.id)
                     updateDoc(userRef, {
                         followers_count: increment(-1)
                     })
@@ -136,8 +139,12 @@ const PostFeed = () => {
         setPostId(id)
     }
 
+    const testElem = async () => {
+        const elems = await Promise.all(postElements)
+        setPostElem(elems)
+    }
 
-    const postElements = postData?.map((item, i) => {
+    const postElements = postData?.map(async (item, i) => {
         if (item.liked_by.some(arrVal => user?.username.toLowerCase() === arrVal)) {
             return (
                 <div key={i} className='postFeed--container'>
@@ -232,7 +239,7 @@ const PostFeed = () => {
         return (
             <div className='postFeed--content--container'>
                 {showMessageModal ? <MessageModal setShowMessageModal={setShowMessageModal} messageSelection={messageSelection} /> : null}
-                {postElements}
+                {postElem && postElem.map(item => item)}
                 {showReplyModal ? <ReplyModal setShowReplyModal={setShowReplyModal} postId={postId} /> : null}
             </div>
 
