@@ -48,6 +48,7 @@ a:visited{ color: white;}
     align-self: flex-end;
     padding: 1rem;
     -webkit-user-select: none;
+    cursor: pointer;
 }
 
 .postFeed--content{

@@ -3,7 +3,7 @@ import { useUserAuth } from '../contexts/UserAuthContext'
 import { useEffect, useState } from 'react'
 import { getDoc, doc, onSnapshot, updateDoc, query, collection, getDocs, arrayUnion, increment, arrayRemove, } from 'firebase/firestore'
 import { db } from '../firebase'
-import { doesUserExist } from '../utils/user'
+import { doesUserExist, getFollowing } from '../utils/user'
 import MessageModal from './MessageModal'
 import { Link } from 'react-router-dom'
 import ReplyModal from './ReplyModal'
@@ -57,27 +57,37 @@ const PostFeed = () => {
 
     const handleFollow = async (userId) => {
 
-        // need to troubleshoot some function here.
+        // This is still buggy. Sometimes it works..sometimes it does not?
+
+        const currUser = user.username.toLowerCase()
+
+        const currUserRef = doc(db, 'users', authUser.uid)
 
         const q = query(collection(db, 'users'))
         const querySnapshot = await getDocs(q)
         querySnapshot.forEach((snap) => {
             if (snap.data().id === userId) {
-                if (!doesUserExist(snap.followed_by, user.username.toLowerCase())) {
+                if (!doesUserExist(snap.data().followed_by, user)) {
                     const userRef = doc(db, 'users', snap.data().id)
                     updateDoc(userRef, {
                         followers_count: increment(1)
                     })
                     updateDoc(userRef, {
-                        followed_by: arrayUnion(user.username.toLowerCase())
+                        followed_by: arrayUnion(currUser)
                     })
-                }else{
+                    updateDoc(currUserRef, {
+                        following: arrayUnion(snap.data().username.toLowerCase())
+                    })
+                } else {
                     const userRef = doc(db, 'users', snap.data().id)
                     updateDoc(userRef, {
                         followers_count: increment(-1)
                     })
                     updateDoc(userRef, {
-                        followed_by: arrayRemove(user.username.toLowerCase())
+                        followed_by: arrayRemove(currUser)
+                    })
+                    updateDoc(currUserRef, {
+                        following: arrayRemove(snap.data().username.toLowerCase())
                     })
                 }
             }
@@ -126,6 +136,7 @@ const PostFeed = () => {
         setPostId(id)
     }
 
+
     const postElements = postData?.map((item, i) => {
         if (item.liked_by.some(arrVal => user?.username.toLowerCase() === arrVal)) {
             return (
@@ -138,6 +149,16 @@ const PostFeed = () => {
                         <span onClick={() => handleFollow(item.posted_by)} className="material-icons follow">
                             person_add
                         </span>
+
+                        {/* This is so close to working...getFollowing is returning a promise, so the arr.some fails*/}
+
+                        {/* {doesUserExist(getFollowing(authUser), user) ?
+                            <span onClick={() => handleFollow(item.posted_by)} className="material-icons follow">
+                                person_add
+                            </span> :
+                            <span onClick={() => handleFollow(item.posted_by)} className="material-icons follow">
+                                person_remove
+                            </span>} */}
                     </div>
                     <Link to={'post/' + item.id}>
                         <div className='postFeed--content'>
@@ -172,6 +193,14 @@ const PostFeed = () => {
                         <span onClick={() => handleFollow(item.posted_by)} className="material-icons follow">
                             person_add
                         </span>
+
+                        {/* {doesUserExist(getFollowing(authUser), user) ?
+                            <span onClick={() => handleFollow(item.posted_by)} className="material-icons follow">
+                                person_add
+                            </span> :
+                            <span onClick={() => handleFollow(item.posted_by)} className="material-icons follow">
+                                person_remove
+                            </span>} */}
                     </div>
                     <Link to={'post/' + item.id}>
                         <div className='postFeed--content'>
