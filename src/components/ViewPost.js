@@ -70,7 +70,7 @@ const ViewPost = () => {
     const handleLike = async (postId, col, arr) => {
         arr.map(async (item, i) => {
             if (item.id === postId) {
-                if (!doesUserExist(item.liked_by, user)) {
+                if (!doesUserExist(item.liked_by, user.username)) {
                     const q = query(collection(db, col))
                     const querySnapshot = await getDocs(q)
                     querySnapshot.forEach((scr) => {

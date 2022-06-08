@@ -2,7 +2,7 @@ import { doc, getDoc } from "firebase/firestore"
 import { db } from "../../firebase"
 
 export const doesUserExist = (arr, user) => {
-    return arr.some(arrVal => user.username.toLowerCase() === arrVal)
+    return arr.some(arrVal => user.toLowerCase() === arrVal)
 }
 
 export const getFollowing = async (user) => {

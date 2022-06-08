@@ -7,6 +7,7 @@ import { doesUserExist, getFollowing } from '../utils/user'
 import MessageModal from './MessageModal'
 import { Link } from 'react-router-dom'
 import ReplyModal from './ReplyModal'
+import { async } from '@firebase/util'
 
 const PostFeed = () => {
 
@@ -18,11 +19,12 @@ const PostFeed = () => {
     const [messageSelection, setMessageSelection] = useState()
     const [showReplyModal, setShowReplyModal] = useState(false)
     const [postId, setPostId] = useState()
-    const [postElem, setPostElem] = useState()
+    const [following, setFollowing] = useState()
 
     useEffect(() => {
         if (authUser?.uid != null) {
             getUserData()
+            getUserFollowing()
             const q = query(collection(db, 'allScripts'))
             const unsub = onSnapshot(q, (querySnapshot) => {
                 const posts = []
@@ -38,10 +40,12 @@ const PostFeed = () => {
         setUser()
     }, [authUser])
 
-    useEffect(() => {
-        console.log(user)
-    },[user])
-
+    const getUserFollowing = async () => {
+        const unsub = onSnapshot(doc(db, 'users', authUser.uid), (doc) => {
+            setFollowing(doc.data().following)
+        })
+        return unsub
+    }
 
     const getUserData = async () => {
         if (authUser != null) {
@@ -70,7 +74,7 @@ const PostFeed = () => {
         const querySnapshot = await getDocs(q)
         querySnapshot.forEach((snap) => {
             if (snap.id === userId) {
-                if (!doesUserExist(snap.data().followed_by, user)) {
+                if (!doesUserExist(snap.data().followed_by, user.username)) {
                     const userRef = doc(db, 'users', snap.id)
                     updateDoc(userRef, {
                         followers_count: increment(1)
@@ -101,7 +105,7 @@ const PostFeed = () => {
     const handleLike = async (postId) => {
         postData.map(async (item, i) => {
             if (item.id === postId) {
-                if (!doesUserExist(item.liked_by, user)) {
+                if (!doesUserExist(item.liked_by, user.username)) {
                     const q = query(collection(db, 'allScripts'))
                     const querySnapshot = await getDocs(q)
                     querySnapshot.forEach((scr) => {
@@ -139,13 +143,8 @@ const PostFeed = () => {
         setPostId(id)
     }
 
-    const testElem = async () => {
-        const elems = await Promise.all(postElements)
-        setPostElem(elems)
-    }
-
-    const postElements = postData?.map(async (item, i) => {
-        if (item.liked_by.some(arrVal => user?.username.toLowerCase() === arrVal)) {
+    const postElements = postData?.map((item, i) => {
+        if (user) {
             return (
                 <div key={i} className='postFeed--container'>
                     <div className='postFeed--user--container'>
@@ -153,19 +152,13 @@ const PostFeed = () => {
                             <img className="postFeed--user--avatar" src={item.user_profile_image} />
                             <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
                         </div>
-                        <span onClick={() => handleFollow(item.posted_by)} className="material-icons follow">
-                            person_add
-                        </span>
-
-                        {/* This is so close to working...getFollowing is returning a promise, so the arr.some fails*/}
-
-                        {/* {doesUserExist(getFollowing(authUser), user) ?
+                        {following && !doesUserExist(following, item.user) ?
                             <span onClick={() => handleFollow(item.posted_by)} className="material-icons follow">
                                 person_add
                             </span> :
                             <span onClick={() => handleFollow(item.posted_by)} className="material-icons follow">
                                 person_remove
-                            </span>} */}
+                            </span>}
                     </div>
                     <Link to={'post/' + item.id}>
                         <div className='postFeed--content'>
@@ -182,50 +175,11 @@ const PostFeed = () => {
                         </div>
                     </Link>
                     <div className='postFeed--buttons'>
-                        <span onClick={() => handleLike(item.id)} className="material-icons postButton liked">
-                            favorite{item.likes > 0 ? <span className='postFeed--likes liked'>{item.likes}</span> : null}</span>
-                        <span onClick={() => handleReply(item.id)} className="material-icons postButton">
-                            forum{item.replies > 0 ? <span className='postFeed--replies'>{item.replies}</span> : null}</span>
-                    </div>
-                </div>
-            )
-        } else {
-            return (
-                <div key={i} className='postFeed--container'>
-                    <div className='postFeed--user--container'>
-                        <div className='postFeed--userIconName'>
-                            <img className="postFeed--user--avatar" src={item.user_profile_image} />
-                            <h3 onClick={() => handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
-                        </div>
-                        <span onClick={() => handleFollow(item.posted_by)} className="material-icons follow">
-                            person_add
-                        </span>
-
-                        {/* {doesUserExist(getFollowing(authUser), user) ?
-                            <span onClick={() => handleFollow(item.posted_by)} className="material-icons follow">
-                                person_add
-                            </span> :
-                            <span onClick={() => handleFollow(item.posted_by)} className="material-icons follow">
-                                person_remove
-                            </span>} */}
-                    </div>
-                    <Link to={'post/' + item.id}>
-                        <div className='postFeed--content'>
-                            <h4 className='postFeed--post'>{item.post}</h4>
-                            <div className='postFeed--media--container'>
-                                {item.media && item.media.map((image, j) => {
-                                    return (
-                                        <div key={j}>
-                                            <img className='postFeed--media' src={image} />
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        </div>
-                    </Link>
-                    <div className='postFeed--buttons'>
-                        <span onClick={() => handleLike(item.id)} className="material-icons postButton">
-                            favorite{item.likes > 0 ? <span className='postFeed--likes'>{item.likes}</span> : null}</span>
+                        {item?.liked_by && doesUserExist(item.liked_by, user?.username) ?
+                            <span onClick={() => handleLike(item.id)} className="material-icons postButton liked">
+                                favorite{item.likes > 0 ? <span className='postFeed--likes liked'>{item.likes}</span> : null}</span> :
+                            <span onClick={() => handleLike(item.id)} className="material-icons postButton">
+                                favorite{item.likes > 0 ? <span className='postFeed--likes' >{item.likes}</span> : null}</span>}
                         <span onClick={() => handleReply(item.id)} className="material-icons postButton">
                             forum{item.replies > 0 ? <span className='postFeed--replies'>{item.replies}</span> : null}</span>
                     </div>
@@ -239,7 +193,7 @@ const PostFeed = () => {
         return (
             <div className='postFeed--content--container'>
                 {showMessageModal ? <MessageModal setShowMessageModal={setShowMessageModal} messageSelection={messageSelection} /> : null}
-                {postElem && postElem.map(item => item)}
+                {postElements}
                 {showReplyModal ? <ReplyModal setShowReplyModal={setShowReplyModal} postId={postId} /> : null}
             </div>
 
