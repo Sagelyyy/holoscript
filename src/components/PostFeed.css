@@ -57,6 +57,7 @@ a:visited{ color: white;}
     padding: 1rem;
     width: 95%;
     overflow-wrap: break-word;
+    white-space: pre-line;
 }
 
 .postFeed--content:hover{
