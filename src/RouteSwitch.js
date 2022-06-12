@@ -6,6 +6,7 @@ import Profile from "./components/Profile";
 import Notifications from "./components/Notifications";
 import ViewPost from "./components/ViewPost";
 import { UserAuthContextProvider} from "./contexts/UserAuthContext";
+import ViewProfile from "./components/ViewProfile";
 
 
 const RouteSwitch = () => {
@@ -21,6 +22,7 @@ const RouteSwitch = () => {
                         <Route path="messages" element={<Messages />} />
                         <Route path='notifications' element={<Notifications />} />
                         <Route path="/post/:id" element={<ViewPost />} />
+                        <Route path="/user/:username" element={<ViewProfile />} />
                     </Route>
                 </Routes>
             </UserAuthContextProvider>

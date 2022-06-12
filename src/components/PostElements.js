@@ -43,11 +43,8 @@ const PostElements = (props) => {
     }
 
     const handleFollow = async (userId) => {
-
         const currUser = user.username.toLowerCase()
-
         const currUserRef = doc(db, 'users', authUser.uid)
-
         const q = query(collection(db, 'users'))
         const querySnapshot = await getDocs(q)
         querySnapshot.forEach((snap) => {
@@ -124,7 +121,9 @@ const PostElements = (props) => {
                     <div className='postFeed--user--container'>
                         <div className='postFeed--userIconName'>
                             <img className="postFeed--user--avatar" src={item.user_profile_image} />
-                            <h3 onClick={() => props.handleMessage(item.user)} className='postFeed--user--username'>{item.user}</h3>
+                            <Link to={'/user/' + item.user}>
+                                <h3 className='postFeed--user--username'>{item.user}</h3>
+                            </Link>
                         </div>
                         {following && !doesUserExist(following, item.user) ?
                             <span onClick={() => handleFollow(item.posted_by)} className="material-icons follow">
@@ -134,7 +133,7 @@ const PostElements = (props) => {
                                 person_remove
                             </span>}
                     </div>
-                    <Link to={'post/' + item.id}>
+                    <Link to={'/post/' + item.id}>
                         <div className='postFeed--content'>
                             <h4 className='postFeed--post'>{item.post}</h4>
                             <div className='postFeed--media--container'>

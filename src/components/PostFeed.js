@@ -14,12 +14,10 @@ const PostFeed = () => {
     const { authUser } = useUserAuth()
     const [postData, setPostData] = useState()
     const [user, setUser] = useState()
-    const [allUsers, setAllUsers] = useState()
     const [showMessageModal, setShowMessageModal] = useState()
     const [messageSelection, setMessageSelection] = useState()
     const [showReplyModal, setShowReplyModal] = useState(false)
     const [postId, setPostId] = useState()
-    const [following, setFollowing] = useState()
 
     useEffect(() => {
         if (authUser?.uid != null) {
@@ -28,7 +26,9 @@ const PostFeed = () => {
             const unsub = onSnapshot(q, (querySnapshot) => {
                 const posts = []
                 querySnapshot.forEach((doc) => {
-                    posts.push(doc.data())
+                    if (doc.data().in_reply_to === null) {
+                        posts.push(doc.data())
+                    }
                 })
                 posts.sort((a, b) => a.time - b.time).reverse()
                 setPostData(posts)
@@ -67,7 +67,7 @@ const PostFeed = () => {
         return (
             <div className='postFeed--content--container'>
                 {showMessageModal ? <MessageModal setShowMessageModal={setShowMessageModal} messageSelection={messageSelection} /> : null}
-                {postData && <PostElements handleReply={handleReply} handleMessage={handleMessage} postData={postData}/>}
+                {postData && <PostElements handleReply={handleReply} handleMessage={handleMessage} postData={postData} />}
                 {showReplyModal ? <ReplyModal setShowReplyModal={setShowReplyModal} postId={postId} /> : null}
             </div>
 

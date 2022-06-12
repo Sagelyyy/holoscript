@@ -1,10 +1,13 @@
 import './Profile.css'
 import { useUserAuth } from '../contexts/UserAuthContext'
-import { useEffect, useState } from 'react'
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { useEffect, useReducer, useState } from 'react'
+import { getDoc, doc, onSnapshot, updateDoc, query, collection, getDocs, arrayUnion, increment, arrayRemove, where, setDoc } from 'firebase/firestore'
 import { db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL, listAll } from "firebase/storage";
 import newUser from '../images/newUser.jpg'
+import PostElements from './PostElements';
+import ReplyModal from './ReplyModal';
+import MessageModal from './MessageModal';
 
 const Profile = () => {
 
@@ -13,13 +16,28 @@ const Profile = () => {
     const [upload, showUpload] = useState()
     const [uploadFile, setUploadFile] = useState()
     const [imgPath, setImgPath] = useState()
+    const [postData, setPostData] = useState()
+    const [showMessageModal, setShowMessageModal] = useState()
+    const [messageSelection, setMessageSelection] = useState()
+    const [showReplyModal, setShowReplyModal] = useState(false)
+    const [postId, setPostId] = useState()
+
 
     useEffect(() => {
         if (authUser?.uid != null) {
             getUserData()
             getUserImage()
-        } else {
+            const q = query(collection(db, "allScripts"), where("posted_by", "==", authUser?.uid));
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                const post = [];
+                querySnapshot.forEach((doc) => {
+                    post.push(doc.data());
+                });
+                post.sort((a, b) => a.time - b.time).reverse()
+                setPostData([...post])
 
+            });
+            return unsubscribe
         }
     }, [authUser])
 
@@ -41,6 +59,16 @@ const Profile = () => {
         }
     }, [user?.profile_image])
 
+
+    const handleMessage = (username) => {
+        setMessageSelection(username)
+        setShowMessageModal((old) => !old)
+    }
+
+    const handleReply = (id) => {
+        setShowReplyModal(true)
+        setPostId(id)
+    }
 
     const writeUserImage = async () => {
         await setDoc(doc(db, 'users', authUser.uid), user)
@@ -137,35 +165,6 @@ const Profile = () => {
         // showUpload(false)
     }
 
-    const setupElements = () => {
-        //we need to rework this..posts seems the wrong way to do it, maybe match all scripts with user.
-        if (user?.posts) {
-            const scriptElements = user?.posts.map((item, i) => {
-                return (
-                    <div key={i} className='userScripts--container'>
-                        <div className='userScripts--user--container'>
-                            <img className='userScripts--avatar' src={user?.profile_image} />
-                            <h3 className='userScripts--user'>{item.user}</h3>
-                        </div>
-                        <div className='userScripts--content'>
-                            <h4 className='userScripts--post'>{item.post}</h4>
-                            <div className='userScripts--media--container'>
-                                {item.media && item.media.map((image, j) => {
-                                    return (
-                                        <div key={j}>
-                                            <img className='userScripts--media' src={image} />
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        </div>
-                    </div>
-                )
-            }).reverse()
-            return scriptElements
-        }
-    }
-
     if (user) {
         return (
             <div onClick={hideUpload} className='profile--content--container'>
@@ -183,7 +182,9 @@ const Profile = () => {
                 </div>
                 <div>
                     <h1 className='userScripts--title'>Your Scripts</h1>
-                    {setupElements()}
+                    {postData && <PostElements handleReply={handleReply} handleMessage={handleMessage} postData={postData} />}
+                    {showReplyModal ? <ReplyModal setShowReplyModal={setShowReplyModal} postId={postId} /> : null}
+                    {showMessageModal ? <MessageModal setShowMessageModal={setShowMessageModal} messageSelection={messageSelection} /> : null}
                 </div>
             </div>
         )
