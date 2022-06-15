@@ -2,11 +2,7 @@ import './MessageModal.css'
 import { useEffect, useState } from "react"
 import { nanoid } from 'nanoid'
 import { useUserAuth } from '../contexts/UserAuthContext'
-<<<<<<< HEAD
 import { query, collection, getDocs, arrayUnion, doc, updateDoc, getDoc, where } from 'firebase/firestore'
-=======
-import { query, collection, getDocs, arrayUnion, doc, updateDoc, getDoc } from 'firebase/firestore'
->>>>>>> b3bd6f9ae59f130ac65aacd202425d7cf927fda6
 import { db } from '../firebase'
 import { parseMedia } from '../utils/media'
 
@@ -80,7 +76,6 @@ const MessageModal = (props) => {
     }
 
     const writeMessageData = async (message, user) => {
-<<<<<<< HEAD
         console.log(user)
         try {
             const q = query(collection(db, 'users'), where('username', '==', user[0].username))
@@ -91,11 +86,6 @@ const MessageModal = (props) => {
                 const recipientRef = doc(db, 'users', usr.id)
                 updateDoc(recipientRef, { "messages": arrayUnion(message) })
             })
-=======
-        try {
-            const recipientRef = doc(db, 'users', user[0].id)
-            await updateDoc(recipientRef, { "messages": arrayUnion(message) })
->>>>>>> b3bd6f9ae59f130ac65aacd202425d7cf927fda6
         } catch (err) {
             setError(err.message)
             console.log(err)
