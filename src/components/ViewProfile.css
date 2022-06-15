@@ -41,11 +41,8 @@
 .profileView--content--container::-webkit-scrollbar{
     display: none;
 }
-<<<<<<< HEAD
 
 .profileView--mail{
     cursor: pointer;
     user-select: none;
 }
-=======
->>>>>>> b3bd6f9ae59f130ac65aacd202425d7cf927fda6
