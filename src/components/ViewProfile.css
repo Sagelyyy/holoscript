@@ -1,0 +1,48 @@
+.profileView--container{
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-bottom: 1px solid gray;
+}
+
+.profileView--content--container{
+    overflow-y: auto;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+    height: 100vh;
+}
+.profileView--content--container::-webkit-scrollbar{
+    display: none;
+}
+
+.profileView--image{
+    width: 10rem;
+    border-radius: 50%;
+}
+
+.profileView--image:hover{
+    cursor: pointer;
+}
+
+.profileView--username{
+    text-transform: capitalize;
+    margin-left: 4rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+}
+
+.profileView--content--container{
+    overflow-y: auto;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+    height: 100vh;
+}
+.profileView--content--container::-webkit-scrollbar{
+    display: none;
+}
+
+.profileView--mail{
+    cursor: pointer;
+    user-select: none;
+}

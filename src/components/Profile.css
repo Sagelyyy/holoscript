@@ -1,0 +1,110 @@
+.profile--container{
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-bottom: 1px solid gray;
+}
+
+.profile--upload{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    width: 15rem;
+    height: 10rem;
+    background-color: grey;
+    border: 2px solid black;
+    margin-left: 10rem;
+    margin-top: 10rem;
+    gap: 0.5rem;
+    z-index: 2;
+}
+
+.profile--image{
+    width: 10rem;
+    border-radius: 50%;
+}
+
+.profile--image:hover{
+    cursor: pointer;
+}
+
+.profile--username{
+    text-transform: capitalize;
+    margin-left: 4rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+}
+
+.profile--content--container{
+    overflow-y: auto;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+    height: 100vh;
+}
+.profile--content--container::-webkit-scrollbar{
+    display: none;
+}
+
+.userScripts--container{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid grey;
+    z-index: 1;
+}
+
+.userScripts--user--container{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.userScripts--post{
+    padding-bottom: 1rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+
+.userScripts--avatar{
+    width: 10%;
+    border-radius: 50%;
+}
+
+.userScripts--user{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    text-transform: capitalize;
+}
+
+.userScripts--title{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    padding: 1rem;
+}
+
+.userScripts--content{
+    text-align: left;
+    align-self: center;
+    padding: 1rem;
+    width: 95%;
+    overflow-wrap: break-word;
+}
+
+.userScripts--content:hover{
+    cursor: pointer;
+    background-color: rgba(231, 233, 234, 0.1);
+}
+
+.userScripts--media--container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.userScripts--media{
+    max-width: 300px;
+    margin-left: 1rem;
+}

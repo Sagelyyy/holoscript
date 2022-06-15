@@ -1,0 +1,63 @@
+.messages--content--container{
+    overflow-y: auto;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+    height: 80vh;
+}
+.messages--content--container::-webkit-scrollbar{
+    display: none;
+}
+
+.messages--container{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid grey;
+    z-index: 1;
+}
+
+.messages--content{
+    text-align: left;
+    align-self: center;
+    padding: 1rem;
+    width: 95%;
+    overflow-wrap: break-word;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+
+.messages--content:hover{
+    cursor: pointer;
+    background-color: rgba(231, 233, 234, 0.1);
+}
+
+.messages--media--container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.messages--media{
+    max-width: 300px;
+    margin-left: 1rem;
+}
+
+.messages--user--container{
+    display: flex;
+    flex: row;
+    gap: 1rem;
+}
+
+.messages--user--username{
+    text-transform: capitalize;
+    margin-top: 1.5rem;
+}
+
+.messages--user--username:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.messages--user--avatar{
+    width: 10%;
+    border-radius: 50%;
+}

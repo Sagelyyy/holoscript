@@ -1,0 +1,143 @@
+a{text-decoration: none; color: white;}
+
+a:visited{ color: white;}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 28px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+  
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+  
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+  
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+  }
+
+.postFeed--content--container{
+    overflow-y: auto;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+    height: 80vh;
+}
+.postFeed--content--container::-webkit-scrollbar{
+    display: none;
+}
+
+.postFeed--container{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid grey;
+    z-index: 1;
+}
+
+.follow{
+    align-self: flex-end;
+    padding: 1rem;
+    -webkit-user-select: none;
+    cursor: pointer;
+    user-select: none;
+}
+
+.postFeed--content{
+    text-align: left;
+    align-self: center;
+    padding: 1rem;
+    width: 95%;
+    overflow-wrap: break-word;
+    white-space: pre-line;
+}
+
+.postFeed--content:hover{
+    cursor: pointer;
+    background-color: rgba(231, 233, 234, 0.1);
+}
+
+.postFeed--post{
+    padding-bottom: 1rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+
+.postFeed--user--container{
+    display: flex;
+    flex: row;
+    gap: 1rem;
+}
+
+.postFeed--user--username{
+    text-transform: capitalize;
+    margin-top: 1.5rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+}
+
+.postFeed--user--username:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.postFeed--user--avatar{
+    width: 10%;
+    border-radius: 50%;
+}
+
+.postFeed--userIconName{
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    width: 80%;
+    gap: 1rem;
+}
+
+.postFeed--media--container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.postFeed--media{
+    max-width: 300px;
+    margin-left: 1rem;
+}
+
+.postFeed--buttons{
+    display: flex;
+    justify-content: space-around;
+    height: 2.5rem;
+    align-items: baseline;
+}
+
+.postFeed--likes{
+    font-size: 1rem;
+    -webkit-user-select: none;
+}
+
+.postButton{
+    cursor: pointer;
+    transition: transform .2s;
+    -webkit-user-select: none;
+}
+
+.postButton:hover{
+    transform: scale(1.3);
+}
+
+.liked{
+    color: rgb(240, 49, 49);
+    -webkit-user-select: none;
+}
+

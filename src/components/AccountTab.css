@@ -1,0 +1,40 @@
+.accountTab--container{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    gap: 10px;
+    padding: 2rem;
+    width: 125px;
+    border-radius: 20px;
+    text-align: center;
+    height: 20px;
+}
+
+.accountTab--container:hover{
+    cursor: pointer;
+    background-color: rgba(231, 233, 234, 0.1);
+}
+
+.accountTab--username{
+    text-transform: capitalize;
+}
+
+.accountTab--avatar{
+    border-radius: 50%;
+}
+
+.accountTab--options--container{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    background-color: rgba(231, 233, 234, 0.1);
+}
+
+.accountTab--options{
+    border: none;
+    list-style: none;
+    color: white;
+    width: 2rem;
+    height: 100%;
+    background-color: transparent;
+}

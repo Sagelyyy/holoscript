@@ -1,0 +1,101 @@
+a{text-decoration: none; color: white;}
+
+a:visited{ color: white;}
+
+.replyFeed--content--container{
+    overflow-y: auto;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+    height: 100vh;
+}
+.replyFeed--content--container::-webkit-scrollbar{
+    display: none;
+}
+
+
+.replyFeed--container{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid grey;
+    z-index: 1;
+}
+
+.replyFeed--content{
+    text-align: left;
+    align-self: center;
+    padding: 1rem;
+    width: 95%;
+    overflow-wrap: break-word;
+
+}
+
+.replyFeed--post{
+    padding-bottom: 1rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+
+.replyFeed--content:hover{
+    cursor: pointer;
+    background-color: rgba(231, 233, 234, 0.1);
+}
+
+.replyFeed--media--container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.replyFeed--media{
+    max-width: 300px;
+    margin-left: 1rem;
+}
+
+.replyFeed--user--container{
+    display: flex;
+    flex: row;
+    gap: 1rem;
+}
+
+.replyFeed--user--username{
+    text-transform: capitalize;
+    margin-top: 1.5rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+}
+
+.replyFeed--user--username:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.replyFeed--user--avatar{
+    width: 10%;
+    border-radius: 50%;
+}
+
+
+.replyFeed--buttons{
+    display: flex;
+    justify-content: space-around;
+    height: 2.5rem;
+    align-items: baseline;
+}
+
+.replyFeed--likes{
+    font-size: 1rem;
+}
+
+.postButton{
+    cursor: pointer;
+    transition: transform .2s;
+}
+
+.postButton:hover{
+    transform: scale(1.3);
+}
+
+.liked{
+    color: rgb(240, 49, 49);
+}
+
