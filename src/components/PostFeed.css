@@ -49,7 +49,10 @@ a:visited{ color: white;}
     padding: 1rem;
     -webkit-user-select: none;
     cursor: pointer;
+<<<<<<< HEAD
     user-select: none;
+=======
+>>>>>>> b3bd6f9ae59f130ac65aacd202425d7cf927fda6
 }
 
 .postFeed--content{

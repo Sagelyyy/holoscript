@@ -78,7 +78,10 @@ const ViewProfile = () => {
                     <img className='profileView--image' src={profileUser?.profile_image} />
                     <h1 className='profileView--username'>{profileUser?.username}</h1>
                     <h4 className='profileView--followers'>Followers: {profileUser?.followers_count}</h4>
+<<<<<<< HEAD
                     <span onClick={() => handleMessage(username)} class="material-icons profileView--mail">mail</span>
+=======
+>>>>>>> b3bd6f9ae59f130ac65aacd202425d7cf927fda6
                 </div>
                 {postData && <PostElements handleReply={handleReply} handleMessage={handleMessage} postData={postData} />}
                 {showReplyModal ? <ReplyModal setShowReplyModal={setShowReplyModal} postId={postId} /> : null}
