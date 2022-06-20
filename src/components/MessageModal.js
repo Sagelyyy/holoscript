@@ -36,7 +36,6 @@ const MessageModal = (props) => {
 
     useEffect(() => {
         if (!recipientUser) {
-            console.log('getting userlist')
             getUserList(message.recipient)
         }
     }, [])
@@ -50,7 +49,6 @@ const MessageModal = (props) => {
     }, [message])
 
     useEffect(() => {
-        console.log(recipientUser)
     }, [recipientUser])
 
     const getUserData = async () => {
@@ -76,13 +74,11 @@ const MessageModal = (props) => {
     }
 
     const writeMessageData = async (message, user) => {
-        console.log(user)
         try {
             const q = query(collection(db, 'users'), where('username', '==', user[0].username))
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((usr) => {
                 // doc.data() is never undefined for query doc snapshots
-                console.log(usr.id, " => ", usr.data());
                 const recipientRef = doc(db, 'users', usr.id)
                 updateDoc(recipientRef, { "messages": arrayUnion(message) })
             })
@@ -118,7 +114,6 @@ const MessageModal = (props) => {
                 [name]: value
             })
         })
-        console.log(message)
     }
 
     if (showModal) {

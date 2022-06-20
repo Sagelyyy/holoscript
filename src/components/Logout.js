@@ -8,12 +8,12 @@ const Logout = () => {
     const { logOut } = useUserAuth();
     const { authUser } = useUserAuth();
 
-        return (
-            <div>
-                {authUser && <button className='logout--button' onClick={() => logOut(auth)}>Logout</button>}
-            </div>
-        )
-    
+    return (
+        <div>
+            {authUser && <button className='logout--button' onClick={() => logOut(auth)}>Logout</button>}
+        </div>
+    )
+
 
 }
 

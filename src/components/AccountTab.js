@@ -20,11 +20,11 @@ const AccountTab = () => {
                 setShowTab(true)
             });
             return unsub
-        }else{
+        } else {
             setShowTab(false)
             setShowOptions(false)
         }
-    
+
     }, [authUser])
 
     const getUserData = async () => {

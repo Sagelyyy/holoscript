@@ -24,9 +24,6 @@ function App() {
               <Link className="nav--link" to="/messages"><span className="material-icons">
                 chat
               </span> messages</Link>
-              <Link className="nav--link" to="/notifications"><span className="material-icons">
-                notifications
-              </span> notifications</Link>
             </div>
           }
         </div>

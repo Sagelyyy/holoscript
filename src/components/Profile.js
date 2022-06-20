@@ -1,7 +1,7 @@
 import './Profile.css'
 import { useUserAuth } from '../contexts/UserAuthContext'
-import { useEffect, useReducer, useState } from 'react'
-import { getDoc, doc, onSnapshot, updateDoc, query, collection, getDocs, arrayUnion, increment, arrayRemove, where, setDoc } from 'firebase/firestore'
+import { useEffect, useState } from 'react'
+import { getDoc, doc, onSnapshot, query, collection, where, setDoc } from 'firebase/firestore'
 import { db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL, listAll } from "firebase/storage";
 import newUser from '../images/newUser.jpg'
@@ -150,7 +150,6 @@ const Profile = () => {
             () => {
                 // Upload completed successfully, now we can get the download URL
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    console.log('File available at', downloadURL);
                     setImgPath(downloadURL)
                 });
             }

@@ -1,9 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import Home from "./components/Home";
 import Messages from "./components/Messages";
 import Profile from "./components/Profile";
-import Notifications from "./components/Notifications";
 import ViewPost from "./components/ViewPost";
 import { UserAuthContextProvider} from "./contexts/UserAuthContext";
 import ViewProfile from "./components/ViewProfile";
@@ -13,20 +12,19 @@ const RouteSwitch = () => {
 
     return (
 
-        <BrowserRouter>
+        <HashRouter basename="/">
             <UserAuthContextProvider>
                 <Routes>
                     <Route path="/" element={<App />}>
                         <Route path="/" element={<Home />} />
                         <Route path="profile" element={<Profile />} />
                         <Route path="messages" element={<Messages />} />
-                        <Route path='notifications' element={<Notifications />} />
                         <Route path="/post/:id" element={<ViewPost />} />
                         <Route path="/user/:username" element={<ViewProfile />} />
                     </Route>
                 </Routes>
             </UserAuthContextProvider>
-        </BrowserRouter>
+        </HashRouter>
 
     );
 };

@@ -4,9 +4,7 @@ import { doesUserExist } from '../utils/user'
 import { useEffect, useState } from 'react'
 import { getDoc, doc, onSnapshot, updateDoc, query, collection, getDocs, arrayUnion, increment, arrayRemove, } from 'firebase/firestore'
 import { db } from '../firebase'
-import MessageModal from './MessageModal'
 import { Link } from 'react-router-dom'
-import ReplyModal from './ReplyModal'
 
 
 const PostElements = (props) => {

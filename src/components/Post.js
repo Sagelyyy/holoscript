@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useUserAuth } from '../contexts/UserAuthContext'
-import { doc, getDoc, updateDoc, arrayUnion, setDoc, addDoc, collection } from "firebase/firestore";
+import { doc, getDoc, updateDoc, arrayUnion, addDoc, collection } from "firebase/firestore";
 import { db } from "../firebase";
 import './Post.css'
 import { nanoid } from 'nanoid';
@@ -25,7 +25,6 @@ const Post = () => {
 
     useEffect(() => {
         if (submitted && post.user) {
-            console.log('fired')
             writePostData(post)
             setSubmitted(false)
             setPost((old) => {

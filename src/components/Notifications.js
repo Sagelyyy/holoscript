@@ -1,5 +1,5 @@
 const Notifications = () => {
-    return(
+    return (
         <h1>Hello Notifications</h1>
     )
 }

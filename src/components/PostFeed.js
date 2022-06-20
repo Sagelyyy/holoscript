@@ -1,11 +1,9 @@
 import './PostFeed.css'
 import { useUserAuth } from '../contexts/UserAuthContext'
 import { useEffect, useState } from 'react'
-import { getDoc, doc, onSnapshot, updateDoc, query, collection, getDocs, arrayUnion, increment, arrayRemove, } from 'firebase/firestore'
+import { getDoc, doc, onSnapshot, query, collection, } from 'firebase/firestore'
 import { db } from '../firebase'
-import { doesUserExist, getFollowing } from '../utils/user'
 import MessageModal from './MessageModal'
-import { Link } from 'react-router-dom'
 import ReplyModal from './ReplyModal'
 import PostElements from './PostElements'
 

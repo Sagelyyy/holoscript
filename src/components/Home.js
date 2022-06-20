@@ -23,9 +23,9 @@ const Home = () => {
 
     return (
         <div className="home--container">
-            <h1 style={{color: 'white'}}>Home</h1>
-            {newUser && showModal ? <SignUpModal setNewUser={setNewUser}/> : null}
-            {!newUser && showModal ? <LoginModal setNewUser={setNewUser}/> : null}
+            <h1 style={{ color: 'white' }}>Home</h1>
+            {newUser && showModal ? <SignUpModal setNewUser={setNewUser} /> : null}
+            {!newUser && showModal ? <LoginModal setNewUser={setNewUser} /> : null}
             <Post />
             <PostFeed />
         </div>

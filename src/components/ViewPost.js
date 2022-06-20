@@ -1,11 +1,10 @@
 
 import './ViewPost.css'
-import { Link, useParams } from "react-router-dom"
-import { getDoc, doc, onSnapshot, updateDoc, query, collection, getDocs, arrayUnion, increment, arrayRemove, where } from 'firebase/firestore'
+import { useParams } from "react-router-dom"
+import { getDoc, doc, onSnapshot, query, where, collection } from 'firebase/firestore'
 import { db } from "../firebase";
 import { useState, useEffect } from "react";
 import { useUserAuth } from "../contexts/UserAuthContext";
-import { doesUserExist } from '../utils/user';
 import ReplyModal from "./ReplyModal";
 import MessageModal from './MessageModal';
 import PostElements from './PostElements'
@@ -81,7 +80,7 @@ const ViewPost = () => {
         }
     }
 
-   
+
 
     return (
         <div className='replyFeed--content--container'>

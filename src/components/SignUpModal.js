@@ -105,7 +105,7 @@ const SignUpModal = (props) => {
                 }
             }
         }
-        else{
+        else {
             setError('Username taken')
         }
     }
