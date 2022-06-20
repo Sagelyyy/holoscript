@@ -50,9 +50,14 @@ const LoginModal = (props) => {
     } catch (err) {
       setError(err.message)
     }
-
-
   }
+
+  const handleGuest = () => {
+    setUser({email: 'test@gmail.com'})
+    setPassword({password: '123qwe'})
+    handleSubmit()
+  }
+
   if (showModal) {
     return (
       <div className="modal--container--login">
@@ -64,6 +69,8 @@ const LoginModal = (props) => {
           <br></br>
           <button>Submit</button>
           <h5>New user? <span onClick={() => { props.setNewUser(true) }} className='signup--button'>Sign up now.</span></h5>
+          <br></br>
+          <button className='modal--guest' onClick={() => handleGuest()}> Login as a Guest</button>
         </form>
       </div>
     )
