@@ -170,7 +170,8 @@ nav a:hover {
     align-items: flex-end;
     align-self: flex-end;
     justify-content: flex-end;
-    max-width: 120px;
+    max-width: 110px;
+    max-height: 50px;
   }
 
 }
