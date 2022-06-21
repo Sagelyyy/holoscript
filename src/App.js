@@ -2,7 +2,6 @@ import './App.css';
 import { Outlet, Link } from "react-router-dom"
 import AccountTab from './components/AccountTab';
 import { useUserAuth } from './contexts/UserAuthContext';
-import { useEffect } from 'react';
 
 function App() {
 

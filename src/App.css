@@ -1,10 +1,18 @@
-* { margin: 0; padding: 0; font-family: 'Segoe UI';}
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI';
+}
+body, html{
+  overflow: hidden;
+}
 
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 28px;  /* Preferred icon size */
+  font-size: 28px;
+  /* Preferred icon size */
   display: inline-block;
   line-height: 1;
   text-transform: none;
@@ -25,12 +33,12 @@
   font-feature-settings: 'liga';
 }
 
-.app--container{
+.app--container {
   display: flex;
   height: 100%;
 }
 
-.nav--links--container{
+.nav--links--container {
   margin-top: 15rem;
   text-transform: capitalize;
   display: flex;
@@ -38,14 +46,17 @@
   margin-left: 20rem;
   text-decoration: none;
   color: white;
+  max-width: 300px;
 }
 
-.nav--links--loggedIn--container{
+.nav--links--loggedIn--container {
   display: flex;
   flex-direction: column;
+  max-width: 300px;
 }
 
-nav a, nav a:visited{
+nav a,
+nav a:visited {
   text-decoration: none;
   color: white;
   text-align: left;
@@ -53,32 +64,37 @@ nav a, nav a:visited{
   font-family: 'Roboto', sans-serif;
 }
 
-nav a:hover{text-decoration: underline; border-radius: 20px; width: fit-content;}
+nav a:hover {
+  text-decoration: underline;
+  border-radius: 20px;
+  width: fit-content;
+}
 
-.nav--link:hover{background-color: rgba(231, 233, 234, 0.1);}
+.nav--link:hover {
+  background-color: rgba(231, 233, 234, 0.1);
+}
 
-.app--menu{
+.app--menu {
   height: 100%;
-  width: 40rem;
   background-color: black;
   z-index: 2;
 }
 
-.app--sidebar{
- flex: 1;
- content: ' ';
- height: 100%;
- background-color: black;
+.app--sidebar {
+  flex: 1;
+  content: ' ';
+  height: 100%;
+  background-color: black;
 }
 
-.content--container{
+.content--container {
   width: 40rem;
   background-color: black;
   border-left: 1px solid gray;
   border-right: 1px solid gray;
 }
 
-.account--container{
+.account--container {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -88,11 +104,67 @@ nav a:hover{text-decoration: underline; border-radius: 20px; width: fit-content;
 }
 
 
-.app--title{
+.app--title {
   position: absolute;
-  margin-left: 0;
-  top: 6%;
-  left: 6%;
-  font-size: 100px;
+  top: 100px;
+  left: 50px;
+  font-size: 90px;
   font-family: 'Roboto', sans-serif;
+}
+
+@media screen and (max-width: 600px) {
+
+  .app--menu {
+    position: absolute;
+    width: 100%;
+    height: 5vh;
+    bottom: 0px;
+    background-color: black;
+    border-top: 1px solid white;
+    z-index: 2;
+  }
+
+  .app--title {
+    font-size: 0;
+  }
+
+  .nav--links--container {
+    bottom: 0;
+    left: 33vw;
+    position: absolute;
+    margin-top: 15rem;
+    text-transform: capitalize;
+    display: flex;
+    flex-direction: row;
+    margin-left: 0.5rem;
+    text-decoration: none;
+    color: white;
+    gap: 20px;
+  }
+
+  .nav--links--loggedIn--container {
+    display: flex;
+    flex-direction: row;
+    max-width: 300px;
+    gap: 20px;
+  }
+
+  nav a,
+  nav a:visited {
+    text-decoration: none;
+    color: white;
+    text-align: left;
+    font-size: 0px;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .account--container {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    align-self: flex-end;
+    justify-content: flex-end;
+  }
 }

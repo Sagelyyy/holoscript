@@ -141,3 +141,51 @@ a:visited{ color: white;}
     -webkit-user-select: none;
 }
 
+@media screen and (max-width: 600px) {
+
+    .postFeed--post{
+        padding-bottom: 1rem;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+        overflow-wrap: anywhere;
+    }
+
+    .postFeed--content--container{
+        overflow-y: auto;
+        overflow-x: hidden;
+        overflow-wrap: break-word;
+        max-height: 70vh;
+    }
+
+    .postFeed--content{
+        text-align: left;
+        align-self: center;
+        max-width: 95%;
+        overflow-wrap: break-word;
+        white-space: pre-line;
+      
+    }
+
+    .postFeed--container{
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid grey;
+        z-index: 1;
+        
+    }
+
+    .postFeed--media{
+        max-width: 300px;
+        min-height: auto;
+        margin-left: 1rem;
+      
+    }
+
+    .postFeed--user--container{
+        display: flex;
+        flex: row;
+        gap: 1rem;
+  
+    }
+}
+

@@ -38,3 +38,20 @@
     height: 100%;
     background-color: transparent;
 }
+
+
+@media screen and (max-width: 600px) {
+    .accountTab--container{
+        display: flex;
+        justify-content: space-around;
+        flex-direction: row;
+        gap: 10px;
+        width: 125px;
+        border-radius: 20px;
+        text-align: center;
+        height: 20px;
+        padding: 0;
+        margin-bottom: 10px;
+        margin-left: 5px;
+    }
+}

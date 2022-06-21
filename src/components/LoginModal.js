@@ -61,7 +61,8 @@ const LoginModal = (props) => {
   if (showModal) {
     return (
       <div className="modal--container--login">
-        <h1>Log in and start chatting.</h1>
+        <h1 className='modal--title'>HoloScript</h1>
+        <h2>Log in and start chatting.</h2>
         <form onSubmit={handleSubmit}>
           {error && <h5>{error}</h5>}
           <input onChange={handleChange} name="email" placeholder="email@address.com"></input>
