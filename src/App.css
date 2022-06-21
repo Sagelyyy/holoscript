@@ -139,10 +139,11 @@ nav a:hover {
     text-transform: capitalize;
     display: flex;
     flex-direction: row;
-    margin-left: 0.5rem;
+    margin-left: 1rem;
     text-decoration: none;
     color: white;
     gap: 20px;
+    max-width: 300px;
   }
 
   .nav--links--loggedIn--container {
@@ -169,5 +170,7 @@ nav a:hover {
     align-items: flex-end;
     align-self: flex-end;
     justify-content: flex-end;
+    max-width: 120px;
   }
+
 }
