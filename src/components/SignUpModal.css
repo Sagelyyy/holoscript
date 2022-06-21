@@ -20,3 +20,31 @@
     color: aqua;
     text-decoration: underline;
 }
+
+.modal--title{
+    font-size: 0;
+}
+
+@media screen and (max-width: 600px) {
+
+    .modal--title{
+        font-size: 15vw;
+    }
+
+    .modal--container{
+        position: absolute;
+        top: -160px;
+        left: -160px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+        width: 90%;
+        height: 95%;
+        background-color: grey;
+        border: 2px solid black;
+        gap: 0.5rem;
+        z-index: 2;
+    }
+}
