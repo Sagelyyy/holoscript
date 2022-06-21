@@ -46,12 +46,24 @@
         justify-content: space-around;
         flex-direction: row;
         gap: 10px;
-        width: 125px;
+        max-width: 100px;
+        min-height: 20px;
         border-radius: 20px;
         text-align: center;
-        height: 20px;
         padding: 0;
         margin-bottom: 10px;
-        margin-left: 5px;
+        margin-left: 25px;
+    }
+
+    .accountTab--username{
+        text-transform: capitalize;
+        font-size: 20px;
+    }
+
+    .accountTab--options--container{
+        display: flex;
+        justify-content: center;
+        margin-bottom: 0px;
+        background-color: rgba(231, 233, 234, 0.1);
     }
 }

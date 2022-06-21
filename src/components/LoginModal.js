@@ -46,7 +46,7 @@ const LoginModal = (props) => {
     e.preventDefault()
     setError('')
     try {
-      await logIn(user.email, password.password)
+      await logIn(user.email.trim(), password.password)
     } catch (err) {
       setError(err.message)
     }

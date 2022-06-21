@@ -27,7 +27,7 @@ const Home = () => {
             {!newUser && showModal ? <LoginModal setNewUser={setNewUser} /> : null}
             {authUser &&
                 <div>
-                    <h1 style={{ color: 'white' }}>Home</h1>
+                    <h1 style={{ color: 'white', padding: '5px' }}>Home</h1>
                     <Post />
                     <PostFeed />
                 </div>
