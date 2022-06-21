@@ -5,6 +5,7 @@
 }
 body, html{
   overflow: hidden;
+  overflow-x: hidden;
 }
 
 .material-icons {
@@ -163,6 +164,7 @@ nav a:hover {
   }
 
   .account--container {
+    margin-left: 20px;
     position: absolute;
     bottom: 0;
     display: flex;
@@ -170,8 +172,8 @@ nav a:hover {
     align-items: flex-end;
     align-self: flex-end;
     justify-content: flex-end;
-    max-width: 11npm ins0px;
-    max-height: 50px;
+    max-width: 110px;
+    max-height: 30px;
   }
 
 }
