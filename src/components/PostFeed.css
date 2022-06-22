@@ -189,7 +189,7 @@ a:visited{ color: white;}
     .postFeed--user--container{
         display: flex;
         flex: row;
-        gap: 1rem;
+        gap: 1.2rem;
   
     }
 }
