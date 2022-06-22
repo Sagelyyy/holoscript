@@ -96,6 +96,7 @@ nav a:hover {
   background-color: black;
   border-left: 1px solid gray;
   border-right: 1px solid gray;
+  height: 100vh;
 }
 
 .account--container {
