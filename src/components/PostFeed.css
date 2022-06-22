@@ -165,7 +165,7 @@ a:visited{ color: white;}
     .postFeed--content{
         text-align: left;
         align-self: center;
-        max-width: 95%;
+        max-width: 95vh;
         overflow-wrap: break-word;
         white-space: pre-line;
       
