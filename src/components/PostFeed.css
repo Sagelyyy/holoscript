@@ -160,7 +160,7 @@ a:visited{ color: white;}
         overflow-y: auto;
         overflow-x: hidden;
         overflow-wrap: break-word;
-        max-height: 70vh;
+        max-height: 65vh;
     }
 
     .postFeed--content{

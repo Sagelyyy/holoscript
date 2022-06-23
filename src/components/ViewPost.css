@@ -100,3 +100,15 @@ a:visited{ color: white;}
     color: rgb(240, 49, 49);
 }
 
+
+@media screen and (max-width: 600px) {
+
+    .replyFeed--content--container{
+        overflow-y: auto;
+        overflow-x: hidden;
+        overflow-wrap: break-word;
+        height: 90vh;
+    }
+
+}
+
