@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/holoscript/static/css/main.016161bf.css",
+    "main.css": "/holoscript/static/css/main.9a388799.css",
     "main.js": "/holoscript/static/js/main.09586cd7.js",
     "static/js/787.3fda5e67.chunk.js": "/holoscript/static/js/787.3fda5e67.chunk.js",
     "index.html": "/holoscript/index.html",
-    "main.016161bf.css.map": "/holoscript/static/css/main.016161bf.css.map",
+    "main.9a388799.css.map": "/holoscript/static/css/main.9a388799.css.map",
     "main.09586cd7.js.map": "/holoscript/static/js/main.09586cd7.js.map",
     "787.3fda5e67.chunk.js.map": "/holoscript/static/js/787.3fda5e67.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.016161bf.css",
+    "static/css/main.9a388799.css",
     "static/js/main.09586cd7.js"
   ]
 }
