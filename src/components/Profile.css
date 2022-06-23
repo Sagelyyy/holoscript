@@ -136,4 +136,11 @@
         gap: 0.5rem;
         z-index: 2;
     }
+
+    .profile--content--container{
+        overflow-y: auto;
+        overflow-x: hidden;
+        overflow-wrap: break-word;
+        height: 90vh;
+    }
 }
