@@ -118,7 +118,7 @@ nav a:hover {
 .app--title {
   position: absolute;
   top: 100px;
-  left: 10px;
+  left: 50px;
   font-size: 90px;
   font-family: 'Roboto', sans-serif;
 }

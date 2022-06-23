@@ -58,11 +58,21 @@
 }
 
 .messages--user--avatar{
-    width: 10%;
+    margin-top: 10px;
+    margin-left: 10px;
+    height: 6vh;
+    width: 4vw;
     border-radius: 50%;
 }
 
 
 @media screen and (max-width: 600px) {
 
+    .messages--user--avatar{
+        margin-top: 10px;
+        margin-left: 10px;
+        height: 10vh;
+        width: 20vw;
+        border-radius: 50%;
+    }
 }

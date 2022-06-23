@@ -1,36 +1,38 @@
-.accountTab--container{
+.accountTab--container {
     display: flex;
     justify-content: space-around;
     flex-direction: row;
-    gap: 10px;
-    padding: 2rem;
-    width: 125px;
+    gap: 3px;
+    padding: 1rem;
+    width: 200px;
     border-radius: 20px;
     text-align: center;
     height: 20px;
 }
 
-.accountTab--container:hover{
+.accountTab--container:hover {
     cursor: pointer;
     background-color: rgba(231, 233, 234, 0.1);
 }
 
-.accountTab--username{
+.accountTab--username {
     text-transform: capitalize;
 }
 
-.accountTab--avatar{
+.accountTab--avatar {
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
 }
 
-.accountTab--options--container{
+.accountTab--options--container {
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
     background-color: rgba(231, 233, 234, 0.1);
 }
 
-.accountTab--options{
+.accountTab--options {
     border: none;
     list-style: none;
     color: white;
@@ -41,12 +43,12 @@
 
 
 @media screen and (max-width: 600px) {
-    .accountTab--container{
+    .accountTab--container {
         display: flex;
         justify-content: space-around;
         flex-direction: row;
         gap: 10px;
-        max-width: 100px;
+        max-width: 115px;
         min-height: 20px;
         border-radius: 20px;
         text-align: center;
@@ -55,15 +57,21 @@
         margin-left: 25px;
     }
 
-    .accountTab--username{
+    .accountTab--username {
         text-transform: capitalize;
         font-size: 15px;
     }
 
-    .accountTab--options--container{
+    .accountTab--options--container {
         display: flex;
         justify-content: center;
         margin-bottom: 0px;
         background-color: rgba(231, 233, 234, 0.1);
+    }
+
+    .accountTab--avatar {
+        max-width: 8vw;
+        height: 20px;
+        border-radius: 50%;
     }
 }
