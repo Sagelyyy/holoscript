@@ -70,7 +70,8 @@ a:visited{ color: white;}
 }
 
 .replyFeed--user--avatar{
-    width: 10%;
+    height: 6vh;
+    width: 4vw;
     border-radius: 50%;
 }
 

@@ -108,3 +108,32 @@
     max-width: 300px;
     margin-left: 1rem;
 }
+
+@media screen and (max-width: 600px) {
+
+    .profile--container{
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        border-bottom: 1px solid gray;
+    }
+
+    .profile--upload{
+        position:absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+        top: 5rem;
+        left: 0;
+        width: 70vw;
+        height: 30vh;
+        background-color: grey;
+        border: 2px solid black;
+        margin-left: 2rem;
+        gap: 0.5rem;
+        z-index: 2;
+    }
+}

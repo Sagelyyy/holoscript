@@ -17,7 +17,8 @@
 }
 
 .profileView--image{
-    width: 10rem;
+    height: 10vh;
+    width: 7vw;
     border-radius: 50%;
 }
 
@@ -38,6 +39,7 @@
     overflow-wrap: break-word;
     height: 100vh;
 }
+
 .profileView--content--container::-webkit-scrollbar{
     display: none;
 }
@@ -45,4 +47,22 @@
 .profileView--mail{
     cursor: pointer;
     user-select: none;
+}
+
+
+@media screen and (max-width: 600px) {
+
+    .profileView--image{
+        height: 10vh;
+        width: 20vw;
+        border-radius: 50%;
+    }
+
+    .profileView--content--container{
+        overflow-y: auto;
+        overflow-x: hidden;
+        overflow-wrap: break-word;
+        height: 95vh;
+    }
+
 }
