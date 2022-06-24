@@ -80,7 +80,7 @@ const ViewProfile = () => {
                         <h1 className='profileView--username'>{profileUser?.username}</h1>
                     </div>
                     <h4 className='profileView--followers'>Followers: {profileUser?.followers_count}</h4>
-                    <span onClick={() => handleMessage(username)} class="material-icons profileView--mail">mail</span>
+                    <span onClick={() => handleMessage(username)} className="material-icons profileView--mail">mail</span>
                 </div>
                 {postData && <PostElements handleReply={handleReply} handleMessage={handleMessage} postData={postData} />}
                 {showReplyModal ? <ReplyModal setShowReplyModal={setShowReplyModal} postId={postId} /> : null}
