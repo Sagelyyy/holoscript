@@ -10,14 +10,20 @@ HoloScript is a social app I made for The Odin Project curriculum. It is heavily
 
 ## Built With
 
-- [React](https://reactjs.org/)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 - [React Hooks](https://reactjs.org/docs/hooks-intro.html)
 - [React Context API](https://reactjs.org/docs/context.html)
 - [React Router](https://reactrouter.com/)
+
+![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white)
 - [Firebase Cloud Storage](https://firebase.google.com/docs/storage)
 - [Firebase Auth](https://firebase.google.com/docs/auth)
 - [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore)
-- [Material UI Icons](https://mui.com/material-ui/material-icons)
+
+![Google](https://img.shields.io/badge/google-4285F4?style=for-the-badge&logo=google&logoColor=white)
+- [Material UI Icons](https://fonts.google.com/icons)
+
+
 - Vanilla CSS
 
 ## Preview
