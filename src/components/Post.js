@@ -37,11 +37,12 @@ const Post = () => {
     }, [post])
 
     const handleChange = (e) => {
-        const { name, value } = e.target
+        const { name, value, maxLength } = e.target
+        const postLimit = value.slice(0, maxLength)
         setPost(old => {
             return ({
                 ...old,
-                [name]: value
+                [name]: postLimit
             })
         })
     }
@@ -92,7 +93,7 @@ const Post = () => {
     return (
         <div className="post--container">
             <form onSubmit={handleSubmit} className='post--form'>
-                <textarea onChange={handleChange} name='post' value={post.post} className='post--textarea' placeholder='Whats happening?'></textarea>
+                <textarea onChange={handleChange} maxLength="255" name='post' value={post.post} className='post--textarea' placeholder='Whats happening?'></textarea>
                 <button className='post--button'>Submit</button>
             </form>
         </div>

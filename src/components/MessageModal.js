@@ -107,11 +107,12 @@ const MessageModal = (props) => {
     }
 
     const handleChange = (e) => {
-        const { name, value } = e.target
+        const { name, value, maxLength } = e.target
+        const messageLimit = value.slice(0, maxLength)
         setMessage(old => {
             return ({
                 ...old,
-                [name]: value
+                [name]: messageLimit
             })
         })
     }
@@ -123,7 +124,7 @@ const MessageModal = (props) => {
                 <form className='MessageModal--form' onSubmit={handleSubmit}>
                     {error && <h5>{error}</h5>}
                     <input onChange={handleChange} name='recipient' value={message.recipient} placeholder="Who you sending it to?"></input>
-                    <textarea name='post' onChange={handleChange} placeholder="What are you saying?"></textarea>
+                    <textarea maxLength="255" name='post' onChange={handleChange} placeholder="What are you saying?"></textarea>
                     <br></br>
                     <button>Submit</button>
                 </form>

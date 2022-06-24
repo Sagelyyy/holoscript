@@ -43,11 +43,12 @@ const SignUpModal = (props) => {
     }
 
     const handleChange = (e) => {
-        const { value, name } = e.target
+        const { name, value, maxLength } = e.target
+        const nameLimit = value.slice(0, maxLength)
         setUser(old => {
             return ({
                 ...old,
-                [name]: value
+                [name]: nameLimit
             })
         })
     }
@@ -117,8 +118,8 @@ const SignUpModal = (props) => {
                 <h2>Join today and start chatting.</h2>
                 <form onSubmit={handleSubmit}>
                     {error && <h5>{error}</h5>}
-                    <input onChange={handleChange} name="username" placeholder="username"></input>
-                    <input onChange={handleChange} name="email" placeholder="email@address.com"></input>
+                    <input onChange={handleChange} maxLength="15" name="username" placeholder="username"></input>
+                    <input onChange={handleChange} maxLength="40" name="email" placeholder="email@address.com"></input>
                     <input onChange={handlePassword} name="password" placeholder="password" type='password'></input>
                     <input onChange={handlePasswordConfirm} name="confirmPassword" placeholder="confirm password" type='password'></input>
                     <br></br>
