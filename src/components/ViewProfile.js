@@ -75,8 +75,10 @@ const ViewProfile = () => {
         return (
             <div className='profileView--content--container'>
                 <div className='profileView--container'>
-                    <img className='profileView--image' src={profileUser?.profile_image} />
-                    <h1 className='profileView--username'>{profileUser?.username}</h1>
+                    <div className='profileView--img--username--container'>
+                        <img className='profileView--image' src={profileUser?.profile_image} />
+                        <h1 className='profileView--username'>{profileUser?.username}</h1>
+                    </div>
                     <h4 className='profileView--followers'>Followers: {profileUser?.followers_count}</h4>
                     <span onClick={() => handleMessage(username)} class="material-icons profileView--mail">mail</span>
                 </div>

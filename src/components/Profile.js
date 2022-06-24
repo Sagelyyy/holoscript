@@ -174,9 +174,11 @@ const Profile = () => {
                         <button onClick={uploadData}>Submit</button>
                     </div>}
                 <div className='profile--container'>
-                    {user.profile_image ? <img onClick={showUploadModal} className='profile--image' src={user.profile_image} /> :
-                        <img onClick={showUploadModal} className='profile--image' src={newUser} />}
-                    <h1 className='profile--username'>{user.username}</h1>
+                    <div className='profile--img--username--container'>
+                        {user.profile_image ? <img onClick={showUploadModal} className='profile--image' src={user.profile_image} /> :
+                            <img onClick={showUploadModal} className='profile--image' src={newUser} />}
+                        <h1 className='profile--username'>{user.username}</h1>
+                    </div>
                     <h4 className='profile--followers'>Followers: {user.followers_count}</h4>
                 </div>
                 <div>

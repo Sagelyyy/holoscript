@@ -16,6 +16,13 @@
     display: none;
 }
 
+.profileView--img--username--container{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
 .profileView--image{
     height: 64px;
     width: 64px;
@@ -28,7 +35,6 @@
 
 .profileView--username{
     text-transform: capitalize;
-    margin-left: 4rem;
     font-family: 'Roboto', sans-serif;
     font-weight: 800;
 }
