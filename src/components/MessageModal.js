@@ -123,8 +123,20 @@ const MessageModal = (props) => {
                 <h3>Send a message.</h3>
                 <form className='MessageModal--form' onSubmit={handleSubmit}>
                     {error && <h5>{error}</h5>}
-                    <input onChange={handleChange} name='recipient' value={message.recipient} placeholder="Who you sending it to?"></input>
-                    <textarea maxLength="255" name='post' onChange={handleChange} placeholder="What are you saying?"></textarea>
+                    <input 
+                    onChange={handleChange} 
+                    name='recipient' 
+                    value={message.recipient} 
+                    placeholder="Who are you sending it to?"
+                    required
+                    ></input>
+                    <textarea 
+                    maxLength="255" 
+                    name='post' 
+                    onChange={handleChange} 
+                    placeholder="What are you saying?"
+                    required>
+                    </textarea>
                     <br></br>
                     <button>Submit</button>
                 </form>

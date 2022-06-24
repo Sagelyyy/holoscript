@@ -93,7 +93,14 @@ const Post = () => {
     return (
         <div className="post--container">
             <form onSubmit={handleSubmit} className='post--form'>
-                <textarea onChange={handleChange} maxLength="255" name='post' value={post.post} className='post--textarea' placeholder='Whats happening?'></textarea>
+                <textarea 
+                onChange={handleChange} 
+                maxLength="255" name='post' 
+                value={post.post} 
+                className='post--textarea' 
+                placeholder='Whats happening?'
+                required>
+                </textarea>
                 <button className='post--button'>Submit</button>
             </form>
         </div>

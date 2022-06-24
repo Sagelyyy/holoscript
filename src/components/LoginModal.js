@@ -65,8 +65,8 @@ const LoginModal = (props) => {
         <h2>Log in and start chatting.</h2>
         <form onSubmit={handleSubmit}>
           {error && <h5>{error}</h5>}
-          <input onChange={handleChange} name="email" placeholder="email@address.com"></input>
-          <input onChange={handlePassword} name="password" placeholder="password" type="password"></input>
+          <input onChange={handleChange} required name="email" placeholder="email@address.com"></input>
+          <input onChange={handlePassword} required name="password" placeholder="password" type="password"></input>
           <br></br>
           <button>Submit</button>
           <h5>New user? <span onClick={() => { props.setNewUser(true) }} className='signup--button'>Sign up now.</span></h5>
