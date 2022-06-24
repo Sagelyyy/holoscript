@@ -52,10 +52,15 @@ const LoginModal = (props) => {
     }
   }
 
-  const handleGuest = () => {
+  const handleGuest = async () => {
     setUser({email: 'test@gmail.com'})
     setPassword({password: '123qwe'})
-    handleSubmit()
+    setError('')
+    try {
+      await logIn(user.email.trim(), password.password)
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
   if (showModal) {
