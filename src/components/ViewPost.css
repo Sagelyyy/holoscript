@@ -70,8 +70,8 @@ a:visited{ color: white;}
 }
 
 .replyFeed--user--avatar{
-    height: 6vh;
-    width: 4vw;
+    height: 64px;
+    width: 64px;
     border-radius: 50%;
 }
 
@@ -107,7 +107,7 @@ a:visited{ color: white;}
         overflow-y: auto;
         overflow-x: hidden;
         overflow-wrap: break-word;
-        height: 90vh;
+        height: 85vh;
     }
 
 }

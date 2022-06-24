@@ -17,8 +17,8 @@
 }
 
 .profileView--image{
-    height: 10vh;
-    width: 7vw;
+    height: 64px;
+    width: 64px;
     border-radius: 50%;
 }
 
